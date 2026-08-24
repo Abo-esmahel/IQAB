@@ -1,59 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# IQAB
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
 
-## About Laravel
+**منصة لإدارة الأرقام الافتراضية وخدمات التحقق، مع نظام محفظة مالي مرتبط ببوابة دفع.**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+</div>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## نظرة عامة
 
-## Learning Laravel
+**IQAB** هي منصة ويب مبنية على Laravel، تتيح للمستخدمين:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- شراء أرقام افتراضية فعلية وإدارة رسائلها الواردة من واجهة موحّدة.
+- طلب خدمات التحقق من حسابات تليجرام (بحث، تبليغ، جلب معلومات) عبر مزوّد خارجي.
+- إدارة محفظة مالية (شحن، خصم، استرداد) مرتبطة ببوابة دفع حقيقية.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+كل العمليات المالية محمية بمعاملات قاعدة بيانات وقيود صارمة لمنع أي تلاعب بالرصيد.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## المميزات
 
-## Agentic Development
+- **سوق أرقام افتراضية**: تصفّح، اشترِ، وتابع الرسائل الواردة على أرقامك.
+- **خدمات تليجرام**: التحقق من الحسابات، التبليغ، وجلب المعلومات عبر مزوّد خارجي.
+- **محفظة مستخدمين**: شحن وخصم واسترداد مع سجلّ حركات كامل.
+- **لوحة تحكم للأدمن**:
+  - إدارة المستخدمين (تعليق/تفعيل/تعديل الرصيد).
+  - إدارة الأرقام والمدفوعات.
+  - سجلات التدقيق (Audit Logs) وسجلات الـ Webhooks.
+  - إعدادات النظام وربط الخدمات الخارجية.
+- **تكامل مرن**: بوابة الدفع، مزوّد الأرقام، والتليجرام تُضبط من الإعدادات دون تعديل الكود.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## الأمان
+
+تم بناء المشروع وفق معايير الأمان للإنتاج:
+
+- **الإيداع الموثّق**: لا يُضاف أي رصيد إلا بعد تأكيد الدفع من بوابة الدفع عبر webhook — لا يوجد إيداع وهمي.
+- **حماية الـ Webhooks**: كل الـ webhooks محمية بتواقيع (HMAC/Secret) وترفض الأسرار غير المُهيّأة أو الوهمية.
+- **سلامة المعاملات المالية**: العمليات داخل معاملات DB مع `lockForUpdate` لمنع تضارب الرصيد (race conditions).
+- **الجلسات**: مشفّرة، مع كوكيز آمنة تُفعّل تلقائياً في بيئة الإنتاج.
+- **تحديد المعدل (Rate Limit)**: على المسارات الحسّاسة مثل الإيداع.
+- **التفويض على مستوى الكائن**: سياسات (Policies) تمنع الوصول لبيانات المستخدمين الآخرين.
+- **وضع الصيانة**: قابل للتفعيل من الإدمن ويمنع عمليات العملاء.
+
+## التقنيات
+
+| المجال | التقنية |
+|--------|---------|
+| الإطار | Laravel (PHP) |
+| قاعدة البيانات | SQLite / MySQL |
+| المهام الخلفية | Queue Jobs (مزامنة الرسائل وحالة الأرقام) |
+| التكامل الخارجي | HTTP Client مع تحقق Webhook |
+| الاختبارات | PHPUnit |
+
+## متطلبات التشغيل
+
+- PHP >= 8.2
+- Composer
+- قاعدة بيانات (SQLite افتراضياً، أو MySQL)
+
+## التثبيت والتشغيل
 
 ```bash
-composer require laravel/boost --dev
+# 1. استنساخ المشروع
+git clone https://github.com/Abo-esmahel/IQAB.git
+cd IQAB
 
-php artisan boost:install
+# 2. تثبيت الاعتماديات
+composer install
+
+# 3. إعداد البيئة
+cp .env.example .env
+php artisan key:generate
+
+# 4. قاعدة البيانات والبيانات الأولية
+php artisan migrate --seed
+
+# 5. تشغيل الخادم
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+ثم افتح `http://localhost:8000`.
 
-## Contributing
+### حسابات افتراضية (بعد الـ seed)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| الدور | البريد | كلمة المرور |
+|------|--------|-------------|
+| أدمن | `admin@iqab.com` | `password` |
+| مستخدم تجريبي | `demo@iqab.com` | `password` |
 
-## Code of Conduct
+## الإعداد للإنتاج
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+قبل النشر، اضبط ما يلي في ملف `.env`:
 
-## Security Vulnerabilities
+```dotenv
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.com
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+DB_CONNECTION=mysql
+DB_HOST=...
+DB_DATABASE=...
+DB_USERNAME=...
+DB_PASSWORD=...
 
-## License
+MAIL_MAILER=smtp
+MAIL_HOST=...
+MAIL_USERNAME=...
+MAIL_PASSWORD=...
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-"# IQAB" 
+SESSION_SECURE_COOKIE=true
+QUEUE_CONNECTION=database
+```
+
+ثم من لوحة الإدمن `/admin/settings` أدخل بيانات الربط:
+
+- **بوابة الدفع**: `gateway_url`، `gateway_key`، `gateway_secret`.
+- **مزوّد الأرقام**: `base_url`، `token`، `webhook_secret`.
+- **التليجرام**: `api_url`، `api_token`، `bot_token`، `webhook_secret`.
+
+واربط الـ webhooks لدى المزوّدين:
+
+- بوابة الدفع → `https://your-domain.com/api/webhooks/payments/deposit` (مع هيدر `X-Gateway-Secret`).
+- مزوّد الأرقام → `https://your-domain.com/api/webhooks/phone/messages`.
+- التليجرام → `https://your-domain.com/api/webhooks/telegram`.
+
+## الاختبارات
+
+```bash
+vendor/bin/phpunit
+```
+
+تغطية تشمل: منطق المحفظة، تدقيق الإدمن، حماية الإيداع، ورفض الـ webhooks غير المُهيّأة.
+
+## بنية المشروع (ملخّص)
+
+```
+app/
+├── Actions/         # منطق الشراء والمزامنة
+├── Enums/           # الأنواع المعدّدة (الحالات، المعاملات...)
+├── Http/
+│   ├── Controllers/ # متحكّمات المستخدمين والإدمن
+│   ├── Middleware/  # الصيانة، الصلاحيات، تفعيل المستخدم
+│   └── Requests/    # قواعد التحقق من المدخلات
+├── Models/          # النماذج (User, Wallet, Payment, PhoneNumber...)
+├── Policies/        # تفويض على مستوى الكائن
+└── Services/        # تكامل البوابة، المزوّد، التليجرام، المحفظة
+```
+
+## الترخيص
+
+هذا المشروع مقدّم لأغراض التعلم/العمل. راجع مالك المشروع للترخيص.
