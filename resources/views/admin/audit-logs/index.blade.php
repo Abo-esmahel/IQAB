@@ -11,7 +11,6 @@
                 <option value="login" {{ request('action') === 'login' ? 'selected' : '' }}>Login</option>
                 <option value="register" {{ request('action') === 'register' ? 'selected' : '' }}>Register</option>
                 <option value="purchase" {{ request('action') === 'purchase' ? 'selected' : '' }}>Purchase</option>
-                <option value="deposit" {{ request('action') === 'deposit' ? 'selected' : '' }}>Deposit</option>
                 <option value="adjustment" {{ request('action') === 'adjustment' ? 'selected' : '' }}>Adjustment</option>
                 <option value="suspend" {{ request('action') === 'suspend' ? 'selected' : '' }}>Suspend</option>
                 <option value="activate" {{ request('action') === 'activate' ? 'selected' : '' }}>Activate</option>
@@ -58,7 +57,6 @@
                                         'login' => 'blue',
                                         'register' => 'emerald',
                                         'purchase' => 'purple',
-                                        'deposit' => 'emerald',
                                         'adjustment' => 'amber',
                                         'suspend' => 'red',
                                         'activate' => 'green',

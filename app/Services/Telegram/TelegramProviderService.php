@@ -91,11 +91,17 @@ class TelegramProviderService implements TelegramServiceInterface
 
     protected function client()
     {
-        return Http::baseUrl($this->apiUrl)
+        $client = Http::baseUrl($this->apiUrl)
             ->withToken($this->botToken)
             ->timeout($this->timeout)
             ->withHeaders([
                 'Accept' => 'application/json',
             ]);
+
+        if (config('telegram.disable_ssl_verification', false)) {
+            $client->withOptions(['verify' => false]);
+        }
+
+        return $client;
     }
 }

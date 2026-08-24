@@ -31,7 +31,7 @@
 </head>
 <body class="bg-dark-950 min-h-screen flex items-center justify-center">
     <div class="text-center">
-        <h1 class="text-9xl font-bold text-white mb-4">419</h1>
+        <h1 class="text-7xl sm:text-9xl font-bold text-white mb-4">419</h1>
         <p class="text-xl text-dark-400 mb-8">This page has expired. Please try again.</p>
         <a href="/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
             Go Home

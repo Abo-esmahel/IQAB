@@ -26,15 +26,15 @@ class AdminContactMethodController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string|in:whatsapp,telegram,email,phone,twitter,instagram,discord,facebook,other',
             'value' => 'required|string|max:255',
-            'url' => 'nullable|url|max:500',
+            'url' => 'nullable|string|max:500',
             'color' => 'nullable|string|max:20',
             'description' => 'nullable|string|max:500',
             'is_active' => 'boolean',
-            'sort_order' => 'integer|min:0',
+            'sort_order' => 'nullable|integer|min:0',
         ]);
 
-        $validated['is_active'] = $request->boolean('is_active');
-        $validated['sort_order'] = $request->input('sort_order', 0);
+        $validated['is_active'] = $request->boolean('is_active', true);
+        $validated['sort_order'] = $validated['sort_order'] ?? 0;
 
         ContactMethod::create($validated);
 
@@ -53,14 +53,15 @@ class AdminContactMethodController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string|in:whatsapp,telegram,email,phone,twitter,instagram,discord,facebook,other',
             'value' => 'required|string|max:255',
-            'url' => 'nullable|url|max:500',
+            'url' => 'nullable|string|max:500',
             'color' => 'nullable|string|max:20',
             'description' => 'nullable|string|max:500',
             'is_active' => 'boolean',
-            'sort_order' => 'integer|min:0',
+            'sort_order' => 'nullable|integer|min:0',
         ]);
 
-        $validated['is_active'] = $request->boolean('is_active');
+        $validated['is_active'] = $request->boolean('is_active', $contactMethod->is_active);
+        $validated['sort_order'] = $validated['sort_order'] ?? $contactMethod->sort_order;
 
         $contactMethod->update($validated);
 

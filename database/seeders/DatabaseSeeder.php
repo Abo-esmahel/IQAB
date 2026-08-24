@@ -6,6 +6,7 @@ use App\Enums\PhoneNumberStatus;
 use App\Enums\UserStatus;
 use App\Models\ContactMethod;
 use App\Models\MarketService;
+use App\Models\Offer;
 use App\Models\PhoneNumber;
 use App\Models\TelegramService;
 use App\Models\User;
@@ -84,9 +85,6 @@ class DatabaseSeeder extends Seeder
             'description' => 'Get detailed information about a Telegram account.',
             'is_active' => true,
         ]);
-
-        // Give demo user some balance
-        $demo->wallet()->update(['balance' => 500.00, 'total_deposited' => 500.00]);
 
         // Market Services
         MarketService::create([
@@ -198,6 +196,73 @@ class DatabaseSeeder extends Seeder
             'description' => 'Follow us on Twitter for news and updates.',
             'is_active' => true,
             'sort_order' => 4,
+        ]);
+
+        // Offers
+        Offer::create([
+            'title' => 'New User Welcome Offer',
+            'slug' => 'new-user-welcome-offer',
+            'badge' => 'NEW',
+            'description' => 'Get a special discount on your first phone number purchase. Start using virtual numbers today at a discounted rate!',
+            'original_price' => 50.00,
+            'offer_price' => 29.99,
+            'discount_percent' => 40,
+            'type' => 'service',
+            'related_service_id' => null,
+            'related_number_id' => null,
+            'cta_text' => 'Get Started',
+            'cta_url' => null,
+            'image' => null,
+            'is_featured' => true,
+            'is_active' => true,
+            'starts_at' => now(),
+            'expires_at' => now()->addDays(30),
+            'usage_limit' => 100,
+            'used_count' => 12,
+        ]);
+
+        Offer::create([
+            'title' => 'Bulk Number Discount',
+            'slug' => 'bulk-number-discount',
+            'badge' => 'HOT',
+            'description' => 'Buy 3 or more phone numbers and save big. Perfect for businesses that need multiple virtual numbers.',
+            'original_price' => 150.00,
+            'offer_price' => 99.99,
+            'discount_percent' => 33,
+            'type' => 'number',
+            'related_service_id' => null,
+            'related_number_id' => null,
+            'cta_text' => 'Buy Bundle',
+            'cta_url' => null,
+            'image' => null,
+            'is_featured' => true,
+            'is_active' => true,
+            'starts_at' => now(),
+            'expires_at' => now()->addDays(14),
+            'usage_limit' => 50,
+            'used_count' => 8,
+        ]);
+
+        Offer::create([
+            'title' => 'Instagram Analysis Premium',
+            'slug' => 'instagram-analysis-premium',
+            'badge' => 'SALE',
+            'description' => 'Get the full Instagram Account Analysis at a discounted price. Includes follower growth tracking and engagement metrics.',
+            'original_price' => 15.00,
+            'offer_price' => 9.99,
+            'discount_percent' => 33,
+            'type' => 'service',
+            'related_service_id' => MarketService::where('slug', 'instagram-account-analysis')->first()?->id,
+            'related_number_id' => null,
+            'cta_text' => 'Order Now',
+            'cta_url' => null,
+            'image' => null,
+            'is_featured' => true,
+            'is_active' => true,
+            'starts_at' => now(),
+            'expires_at' => now()->addDays(7),
+            'usage_limit' => null,
+            'used_count' => 0,
         ]);
     }
 }

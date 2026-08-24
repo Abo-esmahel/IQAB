@@ -8,7 +8,7 @@
         <x-stat-card title="Total Users" value="{{ number_format($stats['total_users']) }}" color="blue" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>' />
         <x-stat-card title="Active Users" value="{{ number_format($stats['active_users']) }}" color="emerald" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' />
         <x-stat-card title="Active Numbers" value="{{ number_format($stats['active_numbers']) }}" color="purple" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>' />
-        <x-stat-card title="Total Revenue" value="{{ number_format($stats['total_revenue'], 2) }} SAR" color="amber" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>' />
+        <x-stat-card title="Total Purchases" value="{{ number_format($stats['total_purchases']) }}" color="amber" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' />
     </div>
 
     <div class="grid lg:grid-cols-3 gap-6 mb-8">
@@ -22,10 +22,6 @@
                 <a href="{{ route('admin.numbers.index') }}" class="rounded-lg bg-dark-800 border border-dark-700 p-4 text-center hover:border-primary-500/50 transition-colors">
                     <svg class="h-6 w-6 text-purple-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     <span class="text-xs font-medium text-dark-300">Numbers</span>
-                </a>
-                <a href="{{ route('admin.payments.index') }}" class="rounded-lg bg-dark-800 border border-dark-700 p-4 text-center hover:border-primary-500/50 transition-colors">
-                    <svg class="h-6 w-6 text-emerald-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                    <span class="text-xs font-medium text-dark-300">Payments</span>
                 </a>
                 <a href="{{ route('admin.webhooks.index') }}" class="rounded-lg bg-dark-800 border border-dark-700 p-4 text-center hover:border-primary-500/50 transition-colors">
                     <svg class="h-6 w-6 text-sky-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>

@@ -29,9 +29,14 @@ class TelegramBotService
         $url = 'https://api.telegram.org/bot' . $this->botToken . '/' . $method;
 
         try {
-            $response = Http::timeout($this->timeout)
-                ->acceptJson()
-                ->post($url, $params);
+            $client = Http::timeout($this->timeout)
+                ->acceptJson();
+
+            if (config('telegram.disable_ssl_verification', false)) {
+                $client->withOptions(['verify' => false]);
+            }
+
+            $response = $client->post($url, $params);
 
             if ($response->failed()) {
                 Log::error('Telegram bot API call failed', [

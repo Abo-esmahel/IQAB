@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Enums\PhoneNumberStatus;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PhoneNumber extends Model
 {
+    use HasFactory;
     protected $fillable = ['phone_number', 'provider', 'country', 'country_code', 'provider_number_id', 'price', 'status', 'metadata', 'expires_at'];
 
     protected $casts = [

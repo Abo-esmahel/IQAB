@@ -40,23 +40,15 @@
 
             <div class="rounded-xl bg-dark-800 border border-dark-700 p-6">
                 <h2 class="text-lg font-semibold text-white mb-4">Purchase Service</h2>
-                <form method="POST" action="{{ route('services.purchase', $service) }}" class="space-y-4">
-                    @csrf
-                    <div>
-                        <label class="block text-sm font-medium text-dark-300 mb-1.5">Required Information</label>
-                        <input type="text" name="input_data" required placeholder="Enter the required data for this service"
-                               class="w-full rounded-lg bg-dark-900 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors">
-                        <p class="text-xs text-dark-500 mt-1">Provide the necessary input for this service to process.</p>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-2">
-                        <p class="text-sm text-dark-400">Total: <span class="font-semibold text-white">{{ number_format($service->price, 2) }} SAR</span></p>
-                        <button type="submit" onclick="return confirm('Purchase this service for {{ number_format($service->price, 2) }} SAR?')"
-                                class="rounded-lg bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
-                            Purchase Now
-                        </button>
-                    </div>
-                </form>
+                <div class="space-y-4">
+                    <p class="text-sm text-dark-400">Total: <span class="font-semibold text-white">{{ number_format($service->price, 2) }} SAR</span></p>
+                    <a href="{{ config('app.telegram_contact') }}" target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
+                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+                        Purchase via Telegram
+                    </a>
+                    <p class="text-xs text-dark-500">Contact us on Telegram to complete your order.</p>
+                </div>
             </div>
         </div>
     </div>

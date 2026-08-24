@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h1 class="text-2xl font-bold text-white">Telegram Tools</h1>
         <a href="{{ route('telegram.history') }}" class="text-sm text-primary-400 hover:text-primary-300">Request History</a>
     </div>

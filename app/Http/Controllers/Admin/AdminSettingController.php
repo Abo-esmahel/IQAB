@@ -12,36 +12,6 @@ use Illuminate\View\View;
 class AdminSettingController extends Controller
 {
     protected array $schema = [
-        'payment' => [
-            'label' => 'Payment Gateway',
-            'icon' => 'credit-card',
-            'settings' => [
-                'payments.gateway_url' => [
-                    'label' => 'Gateway URL',
-                    'type' => 'url',
-                    'placeholder' => 'https://gateway.example.com',
-                    'description' => 'Base URL of the payment gateway API.',
-                ],
-                'payments.gateway_key' => [
-                    'label' => 'Gateway Key',
-                    'type' => 'string',
-                    'placeholder' => 'gateway-key',
-                    'description' => 'Public gateway key (X-Gateway-Key header).',
-                ],
-                'payments.gateway_secret' => [
-                    'label' => 'Gateway Secret',
-                    'type' => 'secret',
-                    'placeholder' => 'secret',
-                    'description' => 'Secret used as bearer token for the gateway.',
-                ],
-                'payments.timeout' => [
-                    'label' => 'Timeout (seconds)',
-                    'type' => 'integer',
-                    'placeholder' => '60',
-                    'description' => 'HTTP timeout for gateway requests.',
-                ],
-            ],
-        ],
         'phone' => [
             'label' => 'Phone Provider',
             'icon' => 'device-phone-mobile',

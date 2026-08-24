@@ -5,21 +5,20 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NumberController;
 use App\Http\Controllers\MyNumberController;
 use App\Http\Controllers\InboxController;
-use App\Http\Controllers\WalletController;
-use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminNumberController;
-use App\Http\Controllers\Admin\AdminPaymentController;
 use App\Http\Controllers\Admin\AdminWebhookLogController;
 use App\Http\Controllers\Admin\AdminAuditLogController;
 use App\Http\Controllers\Admin\AdminServiceController;
+use App\Http\Controllers\Admin\AdminOfferController;
 use App\Http\Controllers\Admin\AdminContactMethodController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\TelegramBotController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\MarketplaceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,6 +36,7 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 // Public Routes
+Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace');
 Route::get('/numbers', [NumberController::class, 'index'])->name('numbers.index');
 Route::get('/numbers/{number}', [NumberController::class, 'show'])->name('numbers.show');
 Route::get('/contact', function () {
@@ -54,9 +54,6 @@ Route::middleware(['auth', 'maintenance.mode'])->group(function () {
     Route::get('/profile/change-password', [AuthController::class, 'showChangePassword'])->name('password.change');
     Route::put('/profile/change-password', [AuthController::class, 'changePassword'])->name('password.update');
 
-    // Purchase Number
-    Route::post('/numbers/{number}/purchase', [NumberController::class, 'purchase'])->name('numbers.purchase');
-
     // My Numbers
     Route::get('/dashboard/numbers', [MyNumberController::class, 'index'])->name('my-numbers.index');
     Route::get('/dashboard/numbers/{purchase}', [MyNumberController::class, 'show'])->name('my-numbers.show');
@@ -64,14 +61,6 @@ Route::middleware(['auth', 'maintenance.mode'])->group(function () {
     // Inbox
     Route::get('/dashboard/numbers/{purchase}/inbox', [InboxController::class, 'index'])->name('inbox.index');
     Route::get('/dashboard/numbers/{purchase}/inbox/{message}', [InboxController::class, 'show'])->name('inbox.show');
-
-    // Wallet
-    Route::get('/wallet', [WalletController::class, 'index'])->name('wallet.index');
-    Route::post('/wallet/deposit', [WalletController::class, 'deposit'])->name('wallet.deposit')->middleware('throttle:10,1');
-    Route::get('/wallet/deposit/return', [WalletController::class, 'depositReturn'])->name('wallet.deposit.return');
-
-    // Transactions
-    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     // Telegram Services
     Route::get('/telegram', [TelegramController::class, 'index'])->name('telegram.index');
@@ -82,15 +71,11 @@ Route::middleware(['auth', 'maintenance.mode'])->group(function () {
     // Market Services
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
     Route::get('/services/{service:slug}', [ServiceController::class, 'show'])->name('services.show');
-    Route::post('/services/{service:slug}/purchase', [ServiceController::class, 'purchase'])->name('services.purchase');
-    Route::get('/services/purchase/{purchase}', [ServiceController::class, 'result'])->name('services.result');
-    Route::get('/services/history', [ServiceController::class, 'history'])->name('services.history');
 });
 
 // Webhook Routes (no auth, validated by signature)
 Route::post('/api/webhooks/phone/messages', [WebhookController::class, 'phoneMessages']);
 Route::post('/api/webhooks/telegram', [WebhookController::class, 'telegram']);
-Route::post('/api/webhooks/payments/deposit', [WalletController::class, 'depositCallback']);
 
 // Admin Routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -101,7 +86,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
     Route::post('/users/{user}/suspend', [AdminUserController::class, 'suspend'])->name('users.suspend');
     Route::post('/users/{user}/activate', [AdminUserController::class, 'activate'])->name('users.activate');
-    Route::post('/users/{user}/adjust-balance', [AdminUserController::class, 'adjustBalance'])->name('users.adjust-balance');
 
     // Numbers
     Route::get('/numbers', [AdminNumberController::class, 'index'])->name('numbers.index');
@@ -111,10 +95,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('/numbers/{number}', [AdminNumberController::class, 'update'])->name('numbers.update');
     Route::delete('/numbers/{number}', [AdminNumberController::class, 'destroy'])->name('numbers.destroy');
     Route::get('/numbers/purchases', [AdminNumberController::class, 'purchases'])->name('numbers.purchases');
-
-    // Payments
-    Route::get('/payments', [AdminPaymentController::class, 'index'])->name('payments.index');
-    Route::post('/payments/{payment}/approve', [AdminPaymentController::class, 'approve'])->name('payments.approve');
 
     // Services
     Route::get('/services', [AdminServiceController::class, 'index'])->name('services.index');
@@ -131,6 +111,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/contact-methods/{contactMethod}/edit', [AdminContactMethodController::class, 'edit'])->name('contact-methods.edit');
     Route::put('/contact-methods/{contactMethod}', [AdminContactMethodController::class, 'update'])->name('contact-methods.update');
     Route::delete('/contact-methods/{contactMethod}', [AdminContactMethodController::class, 'destroy'])->name('contact-methods.destroy');
+
+    // Offers
+    Route::get('/offers', [AdminOfferController::class, 'index'])->name('offers.index');
+    Route::get('/offers/create', [AdminOfferController::class, 'create'])->name('offers.create');
+    Route::post('/offers', [AdminOfferController::class, 'store'])->name('offers.store');
+    Route::get('/offers/{offer}/edit', [AdminOfferController::class, 'edit'])->name('offers.edit');
+    Route::put('/offers/{offer}', [AdminOfferController::class, 'update'])->name('offers.update');
+    Route::delete('/offers/{offer}', [AdminOfferController::class, 'destroy'])->name('offers.destroy');
 
     // Webhook Logs
     Route::get('/webhook-logs', [AdminWebhookLogController::class, 'index'])->name('webhooks.index');

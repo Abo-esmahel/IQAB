@@ -8,6 +8,7 @@ enum NumberPurchaseStatus: string
     case Expired = 'expired';
     case Cancelled = 'cancelled';
     case Refunded = 'refunded';
+    case Failed = 'failed';
 
     public function label(): string
     {
@@ -17,6 +18,7 @@ enum NumberPurchaseStatus: string
             self::Expired => 'Expired',
             self::Cancelled => 'Cancelled',
             self::Refunded => 'Refunded',
+            self::Failed => 'Failed',
         };
     }
 
@@ -28,7 +30,7 @@ enum NumberPurchaseStatus: string
             self::Expired => 'red',
             self::Cancelled => 'gray',
             self::Refunded => 'orange',
+            self::Failed => 'red',
         };
     }
-
 }

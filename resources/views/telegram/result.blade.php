@@ -8,7 +8,7 @@
     </a>
 
     <div class="rounded-xl bg-dark-900 border border-dark-800 p-6">
-        <div class="flex items-center justify-between mb-4 pb-4 border-b border-dark-800">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 pb-4 border-b border-dark-800">
             <div>
                 <h1 class="text-lg font-semibold text-white">{{ $request->telegramService?->name }}</h1>
                 <p class="text-sm text-dark-400">Target: {{ $request->target_identifier }}</p>

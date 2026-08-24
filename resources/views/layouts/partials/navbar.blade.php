@@ -30,7 +30,6 @@
                         <div x-show="open" x-cloak x-transition x-cloak @click.away="open = false"
                              class="absolute right-0 mt-2 w-56 rounded-xl bg-dark-800 border border-dark-700 shadow-xl py-2 z-50">
                             <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-dark-200 hover:bg-dark-700">Profile</a>
-                            <a href="{{ route('wallet.index') }}" class="block px-4 py-2 text-sm text-dark-200 hover:bg-dark-700">Wallet</a>
                             @if(auth()->user()->isAdmin())
                                 <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-dark-200 hover:bg-dark-700">Admin Panel</a>
                             @endif

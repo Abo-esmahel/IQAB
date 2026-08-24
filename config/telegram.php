@@ -17,6 +17,7 @@ return [
     'api_token'      => env('TELEGRAM_API_TOKEN', ''),
     'bot_token'      => env('TELEGRAM_BOT_TOKEN', ''),
     'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET', ''),
-    'timeout'        => env('TELEGRAM_TIMEOUT', 30),
+    'timeout'              => env('TELEGRAM_TIMEOUT', 30),
+    'disable_ssl_verification' => env('TELEGRAM_DISABLE_SSL_VERIFICATION', false),
 
 ];

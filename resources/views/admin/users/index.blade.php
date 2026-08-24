@@ -28,7 +28,6 @@
                     <thead><tr class="border-b border-dark-800">
                         <th class="text-left py-3 px-4 text-xs font-medium text-dark-400 uppercase">User</th>
                         <th class="text-left py-3 px-4 text-xs font-medium text-dark-400 uppercase">Role</th>
-                        <th class="text-left py-3 px-4 text-xs font-medium text-dark-400 uppercase">Balance</th>
                         <th class="text-left py-3 px-4 text-xs font-medium text-dark-400 uppercase">Status</th>
                         <th class="text-left py-3 px-4 text-xs font-medium text-dark-400 uppercase hidden sm:table-cell">Joined</th>
                         <th class="text-right py-3 px-4 text-xs font-medium text-dark-400 uppercase">Actions</th>
@@ -45,7 +44,6 @@
                                     {{ ucfirst($user->role) }}
                                 </span>
                             </td>
-                            <td class="py-3 px-4 text-sm text-dark-200">{{ number_format($user->wallet->balance ?? 0, 2) }} SAR</td>
                             <td class="py-3 px-4">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $user->status->value === 'active' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400' }}">
                                     {{ $user->status->value === 'active' ? 'Active' : ucfirst($user->status->value) }}

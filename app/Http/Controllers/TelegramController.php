@@ -5,14 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TelegramServiceRequestForm;
 use App\Models\TelegramService;
 use App\Models\TelegramServiceRequest;
-use App\Models\WalletTransaction;
 use App\Services\Telegram\TelegramProviderService;
-use App\Services\Wallet\WalletService;
 use App\Enums\TelegramServiceStatus;
 use App\Enums\TelegramServiceType;
-use App\Enums\TransactionType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class TelegramController extends Controller
@@ -32,49 +28,13 @@ class TelegramController extends Controller
         $user = $request->user();
         $price = (float) $service->price;
 
-        try {
-            $serviceRequest = DB::transaction(function () use ($user, $service, $request, $price) {
-                $wallet = app(WalletService::class)->getOrCreateWallet($user);
-
-                $balanceBefore = (float) $wallet->balance;
-
-                if ($balanceBefore < $price) {
-                    throw new \Exception('Insufficient balance.');
-                }
-
-                $balanceAfter = $balanceBefore - $price;
-
-                $wallet->update([
-                    'balance' => $balanceAfter,
-                    'total_spent' => (float) $wallet->total_spent + $price,
-                ]);
-
-                $serviceRequest = TelegramServiceRequest::create([
-                    'user_id' => $user->id,
-                    'telegram_service_id' => $service->id,
-                    'target_identifier' => $request->target_identifier,
-                    'price' => $price,
-                    'status' => TelegramServiceStatus::Processing->value,
-                    'balance_before' => $balanceBefore,
-                    'balance_after' => $balanceAfter,
-                ]);
-
-                WalletTransaction::create([
-                    'wallet_id' => $wallet->id,
-                    'type' => TransactionType::ServiceCharge->value,
-                    'amount' => $price,
-                    'balance_before' => $balanceBefore,
-                    'balance_after' => $balanceAfter,
-                    'reference' => "telegram_service_{$serviceRequest->id}",
-                    'description' => "Telegram service: {$service->name}",
-                    'status' => 'completed',
-                ]);
-
-                return $serviceRequest;
-            });
-        } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
-        }
+        $serviceRequest = TelegramServiceRequest::create([
+            'user_id' => $user->id,
+            'telegram_service_id' => $service->id,
+            'target_identifier' => $request->target_identifier,
+            'price' => $price,
+            'status' => TelegramServiceStatus::Processing->value,
+        ]);
 
         try {
             $apiResult = match($service->type) {
@@ -89,27 +49,6 @@ class TelegramController extends Controller
                     'status' => TelegramServiceStatus::Failed->value,
                     'error_message' => 'Provider returned an empty result.',
                 ]);
-
-                if ($price > 0) {
-                    $wallet = app(WalletService::class)->getOrCreateWallet($user);
-                    $wallet->refresh();
-
-                    $balanceBefore = (float) $wallet->balance;
-                    $balanceAfter = $balanceBefore + $price;
-
-                    $wallet->update(['balance' => $balanceAfter]);
-
-                    WalletTransaction::create([
-                        'wallet_id' => $wallet->id,
-                        'type' => TransactionType::Refund->value,
-                        'amount' => $price,
-                        'balance_before' => $balanceBefore,
-                        'balance_after' => $balanceAfter,
-                        'reference' => "refund_telegram_service_{$serviceRequest->id}",
-                        'description' => "Refund for failed telegram service: {$service->name}",
-                        'status' => 'completed',
-                    ]);
-                }
             } else {
                 $serviceRequest->update([
                     'status' => TelegramServiceStatus::Completed->value,
@@ -118,34 +57,6 @@ class TelegramController extends Controller
             }
         } catch (\Exception $e) {
             Log::error('Telegram service failed', ['error' => $e->getMessage()]);
-
-            if ($price > 0) {
-                try {
-                    $wallet = app(WalletService::class)->getOrCreateWallet($user);
-                    $wallet->refresh();
-
-                    $balanceBefore = (float) $wallet->balance;
-                    $balanceAfter = $balanceBefore + $price;
-
-                    $wallet->update([
-                        'balance' => $balanceAfter,
-                    ]);
-
-                    WalletTransaction::create([
-                        'wallet_id' => $wallet->id,
-                        'type' => TransactionType::Refund->value,
-                        'amount' => $price,
-                        'balance_before' => $balanceBefore,
-                        'balance_after' => $balanceAfter,
-                        'reference' => "refund_telegram_service_{$serviceRequest->id}",
-                        'description' => "Refund for failed telegram service: {$service->name}",
-                        'status' => 'completed',
-                    ]);
-                } catch (\Throwable $refundError) {
-                    Log::error('Telegram service: refund failed', ['error' => $refundError->getMessage()]);
-                }
-            }
-
             $serviceRequest->update([
                 'status' => TelegramServiceStatus::Failed->value,
                 'error_message' => $e->getMessage(),

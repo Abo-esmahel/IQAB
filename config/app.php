@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Telegram Contact
+    |--------------------------------------------------------------------------
+    |
+    | The Telegram handle opened when a customer clicks "Buy" on a number or
+    | service. Used to redirect customers to the seller's Telegram chat.
+    |
+    */
+
+    'telegram_contact' => env('TELEGRAM_CONTACT', 'https://t.me/Kh_505_p'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

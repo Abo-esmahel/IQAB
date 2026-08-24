@@ -30,13 +30,11 @@
         @endif
 
         @if($number->status->value === 'available')
-        <form method="POST" action="{{ route('numbers.purchase', $number) }}" class="text-center">
-            @csrf
-            <input type="hidden" name="phone_number_id" value="{{ $number->id }}">
-            <button type="submit" onclick="return confirm('Buy this number for {{ number_format($number->price, 2) }} SAR?')" class="rounded-lg bg-primary-600 px-8 py-3 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
-                Purchase for {{ number_format($number->price, 2) }} SAR
-            </button>
-        </form>
+        <a href="{{ config('app.telegram_contact') }}" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-8 py-3 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+            Buy via Telegram
+        </a>
         @else
         <p class="text-sm text-dark-400">This number is no longer available for purchase.</p>
         @endif

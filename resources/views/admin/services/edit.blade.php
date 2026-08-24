@@ -25,7 +25,7 @@
 
             <x-forms.input name="category" label="Category" :value="$service->category" />
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <x-forms.input name="price" label="Price (SAR)" type="number" step="0.01" min="0" :value="$service->price" required />
                 <x-forms.input name="sort_order" label="Sort Order" type="number" :value="$service->sort_order" />
             </div>

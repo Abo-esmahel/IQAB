@@ -14,7 +14,8 @@ class AdminServiceController extends Controller
         $query = MarketService::query();
 
         if ($request->filled('search')) {
-            $query->where('name', 'like', "%{$request->search}%");
+            $search = '%' . str_replace(['%', '_'], ['\%', '\_'], $request->search) . '%';
+            $query->where('name', 'like', $search);
         }
 
         if ($request->filled('category')) {
@@ -22,11 +23,10 @@ class AdminServiceController extends Controller
         }
 
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            $query->where('is_active', $request->status === 'active');
         }
 
         $services = $query->orderBy('sort_order')->orderByDesc('created_at')->paginate(20);
-
         $categories = MarketService::distinct()->pluck('category')->filter()->values();
 
         return view('admin.services.index', compact('services', 'categories'));
@@ -46,13 +46,20 @@ class AdminServiceController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'image' => ['nullable', 'string', 'max:500'],
             'category' => ['nullable', 'string', 'max:255'],
+            'is_active' => ['nullable', 'boolean'],
             'is_featured' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
+        $baseSlug = Str::slug($validated['name']);
+        $slug = $baseSlug;
+        $counter = 1;
+        while (MarketService::where('slug', $slug)->exists()) {
+            $slug = $baseSlug . '-' . $counter++;
+        }
+        $validated['slug'] = $slug;
+        $validated['is_active'] = $request->boolean('is_active', true);
         $validated['is_featured'] = $request->boolean('is_featured');
-        $validated['status'] = 'active';
 
         MarketService::create($validated);
 
@@ -73,13 +80,23 @@ class AdminServiceController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'image' => ['nullable', 'string', 'max:500'],
             'category' => ['nullable', 'string', 'max:255'],
+            'is_active' => ['nullable', 'boolean'],
             'is_featured' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
-            'status' => ['nullable', 'string', 'in:active,inactive'],
         ]);
 
-        $validated['slug'] = Str::slug($validated['name']);
-        $validated['is_featured'] = $request->boolean('is_featured');
+        if (isset($validated['name']) && $validated['name'] !== $service->name) {
+            $baseSlug = Str::slug($validated['name']);
+            $slug = $baseSlug;
+            $counter = 1;
+            while (MarketService::where('slug', $slug)->where('id', '!=', $service->id)->exists()) {
+                $slug = $baseSlug . '-' . $counter++;
+            }
+            $validated['slug'] = $slug;
+        }
+
+        $validated['is_active'] = $request->boolean('is_active', $service->is_active);
+        $validated['is_featured'] = $request->boolean('is_featured', $service->is_featured);
 
         $service->update($validated);
 
@@ -88,6 +105,10 @@ class AdminServiceController extends Controller
 
     public function destroy(MarketService $service)
     {
+        if ($service->purchases()->exists()) {
+            return back()->with('error', 'Cannot delete a service with existing purchases.');
+        }
+
         $service->delete();
         return redirect()->route('admin.services.index')->with('success', 'Service deleted.');
     }

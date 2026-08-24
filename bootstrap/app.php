@@ -25,7 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'api/webhooks/phone/messages',
             'api/webhooks/telegram',
-            'api/webhooks/payments/deposit',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h1 class="text-2xl font-bold text-white">Contact Methods</h1>
         <a href="{{ route('admin.contact-methods.create') }}" class="inline-flex items-center gap-1.5 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -12,6 +12,7 @@
 
     @if($contactMethods->count())
     <div class="rounded-xl bg-dark-900 border border-dark-800 overflow-hidden">
+        <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
                 <tr class="border-b border-dark-800">
@@ -55,6 +56,7 @@
                 @endforeach
             </tbody>
         </table>
+        </div>
     </div>
     @else
     <div class="rounded-xl bg-dark-900 border border-dark-800 p-12 text-center">

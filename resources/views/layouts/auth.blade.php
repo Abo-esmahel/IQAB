@@ -23,14 +23,12 @@
 <body class="h-full bg-dark-950 text-dark-100">
     <div class="min-h-full flex items-center justify-center px-4 py-12">
         <div class="w-full max-w-md">
-            <div class="text-center mb-8">
-                <a href="{{ route('home') }}" class="inline-flex items-center gap-2">
-                    <div class="h-10 w-10 rounded-lg bg-primary-600 flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">Q</span>
-                    </div>
-                    <span class="text-2xl font-bold text-white">IQAB</span>
-                </a>
-            </div>
+<div class="text-center mb-8">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2">
+                <img src="{{ asset('images/logo.jpg') }}" alt="IQAB" class="h-10 w-10 rounded-lg object-cover">
+                <span class="text-2xl font-bold text-white">IQAB</span>
+            </a>
+        </div>
 
             @if(session('success'))
                 <div class="rounded-lg bg-emerald-500/10 border border-emerald-500/20 p-4 mb-6">

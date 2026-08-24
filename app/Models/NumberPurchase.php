@@ -13,6 +13,7 @@ class NumberPurchase extends Model
     protected $casts = [
         'status' => NumberPurchaseStatus::class,
         'metadata' => 'array',
+        'notified_thresholds' => 'array',
         'price' => 'decimal:2',
         'purchased_at' => 'datetime',
         'expires_at' => 'datetime',

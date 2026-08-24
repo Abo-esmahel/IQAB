@@ -8,7 +8,6 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
-use App\Services\Wallet\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,8 +28,6 @@ class AuthController extends Controller
             'status' => 'active',
             'role' => 'user',
         ]);
-
-        app(WalletService::class)->getOrCreateWallet($user);
 
         Auth::login($user);
 

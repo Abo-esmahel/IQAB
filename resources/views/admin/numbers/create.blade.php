@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h1 class="text-2xl font-bold text-white">Publish Phone Number</h1>
         <a href="{{ route('admin.numbers.index') }}" class="text-sm text-dark-400 hover:text-white transition-colors">&larr; Back to Numbers</a>
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-2">
+    <div class="grid gap-6 lg:grid-cols-1 sm:grid-cols-2">
         {{-- Single number --}}
         <div class="rounded-xl bg-dark-900 border border-dark-800 p-6" x-data="{ status: 'available' }">
             <h2 class="text-lg font-semibold text-white mb-4">Single Number</h2>
@@ -19,7 +19,7 @@
                            placeholder="201234567890"
                            class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-sm font-medium text-dark-300 mb-1.5">Country</label>
                         <input type="text" name="country" value="{{ old('country') }}"
@@ -33,7 +33,7 @@
                                class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-sm font-medium text-dark-300 mb-1.5">Provider</label>
                         <input type="text" name="provider" value="{{ old('provider') }}"
@@ -47,7 +47,7 @@
                                class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-sm font-medium text-dark-300 mb-1.5">Price (SAR)</label>
                         <input type="number" step="0.01" name="price" value="{{ old('price') }}"
@@ -86,7 +86,7 @@
                     <textarea name="bulk" rows="6" placeholder="201234567890&#10;201234567891"
                               class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none font-mono">{{ old('bulk') }}</textarea>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-sm font-medium text-dark-300 mb-1.5">Country</label>
                         <input type="text" name="country" value="{{ old('country') }}"
@@ -100,7 +100,7 @@
                                class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-sm font-medium text-dark-300 mb-1.5">Price (SAR)</label>
                         <input type="number" step="0.01" name="price" value="{{ old('price') }}"

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h1 class="text-2xl font-bold text-white">Edit Phone Number</h1>
         <a href="{{ route('admin.numbers.index') }}" class="text-sm text-dark-400 hover:text-white transition-colors">&larr; Back to Numbers</a>
     </div>
@@ -16,7 +16,7 @@
                 <input type="text" name="phone_number" value="{{ old('phone_number', $number->phone_number) }}"
                        class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none font-mono">
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-sm font-medium text-dark-300 mb-1.5">Country</label>
                     <input type="text" name="country" value="{{ old('country', $number->country) }}"
@@ -28,7 +28,7 @@
                            class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none">
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-sm font-medium text-dark-300 mb-1.5">Provider</label>
                     <input type="text" name="provider" value="{{ old('provider', $number->provider) }}"
@@ -40,7 +40,7 @@
                            class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none">
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-sm font-medium text-dark-300 mb-1.5">Price (SAR)</label>
                     <input type="number" step="0.01" name="price" value="{{ old('price', $number->price) }}"
@@ -66,15 +66,18 @@
                 <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
                     Save Changes
                 </button>
-                <form method="POST" action="{{ route('admin.numbers.destroy', $number) }}" onsubmit="return confirm('Delete this number permanently?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="rounded-lg bg-red-600/10 border border-red-500/30 px-4 py-2.5 text-sm font-medium text-red-400 hover:bg-red-600/20 transition-colors">
-                        Delete
-                    </button>
-                </form>
             </div>
         </form>
+
+        <div class="mt-4 pt-4 border-t border-dark-800">
+            <form method="POST" action="{{ route('admin.numbers.destroy', $number) }}" onsubmit="return confirm('Delete this number permanently?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="rounded-lg bg-red-600/10 border border-red-500/30 px-4 py-2.5 text-sm font-medium text-red-400 hover:bg-red-600/20 transition-colors">
+                    Delete Number
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
