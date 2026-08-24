@@ -16,9 +16,6 @@ class NumberController extends Controller
             $query->where('country', $request->country);
         }
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
 
         if ($request->filled('min_price')) {
             $query->where('price', '>=', $request->min_price);
@@ -30,13 +27,17 @@ class NumberController extends Controller
 
         $numbers = $query->orderByDesc('created_at')->paginate(12);
 
-        $countries = PhoneNumber::distinct()->pluck('country')->filter()->values();
+        $countries = PhoneNumber::where('status', PhoneNumberStatus::Available)->distinct()->pluck('country')->filter()->values();
 
         return view('numbers.index', compact('numbers', 'countries'));
     }
 
     public function show(PhoneNumber $number)
     {
+        if ($number->status !== PhoneNumberStatus::Available) {
+            abort(404);
+        }
+
         return view('numbers.show', ['number' => $number]);
     }
 }

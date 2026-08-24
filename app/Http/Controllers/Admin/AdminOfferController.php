@@ -88,7 +88,11 @@ class AdminOfferController extends Controller
     public function edit(Offer $offer)
     {
         $services = MarketService::active()->orderBy('name')->get();
-        $numbers = PhoneNumber::where('status', 'available')->orderBy('phone_number')->get();
+        $numbersQuery = PhoneNumber::where('status', 'available');
+        if ($offer->related_number_id) {
+            $numbersQuery->orWhere('id', $offer->related_number_id);
+        }
+        $numbers = $numbersQuery->orderBy('phone_number')->get();
 
         return view('admin.offers.edit', compact('offer', 'services', 'numbers'));
     }

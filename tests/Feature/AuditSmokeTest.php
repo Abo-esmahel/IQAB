@@ -77,7 +77,7 @@ class AuditSmokeTest extends TestCase
     {
         $admin = User::factory()->create(['role' => 'admin', 'status' => 'active']);
 
-$urls = [
+        $urls = [
             '/admin/users',
             '/admin/numbers',
             '/admin/services',
@@ -104,23 +104,32 @@ $urls = [
 
     public function test_number_show_page_renders(): void
     {
-$number = PhoneNumber::factory()->create(['status' => PhoneNumberStatus::Available->value]);
-$user = User::factory()->create(['status' => 'active']);
+        $number = PhoneNumber::factory()->create(['status' => PhoneNumberStatus::Available->value]);
+        $user = User::factory()->create(['status' => 'active']);
 
         $this->actingAs($user)->get("/numbers/{$number->id}")
             ->assertStatus(200);
     }
 
+    public function test_number_show_returns_404_for_non_available(): void
+    {
+        $number = PhoneNumber::factory()->create(['status' => PhoneNumberStatus::Disabled->value]);
+        $user = User::factory()->create(['status' => 'active']);
+
+        $this->actingAs($user)->get("/numbers/{$number->id}")
+            ->assertStatus(404);
+    }
+
     public function test_marketplace_lists_available_numbers(): void
     {
-$available = PhoneNumber::factory()->create(['status' => PhoneNumberStatus::Available->value]);
-$sold = PhoneNumber::factory()->create(['status' => PhoneNumberStatus::Expired->value]);
+        $available = PhoneNumber::factory()->create(['status' => PhoneNumberStatus::Available->value]);
+        $sold = PhoneNumber::factory()->create(['status' => PhoneNumberStatus::Expired->value]);
 
         $user = User::factory()->create(['status' => 'active']);
         $response = $this->actingAs($user)->get('/marketplace');
 
         $response->assertStatus(200);
-        $response->assertSee($available->number);
-        $response->assertDontSee($sold->number);
+        $response->assertSee($available->phone_number);
+        $response->assertDontSee($sold->phone_number);
     }
 }

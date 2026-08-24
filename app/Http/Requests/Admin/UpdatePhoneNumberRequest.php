@@ -14,7 +14,7 @@ class UpdatePhoneNumberRequest extends FormRequest
 
     public function rules(): array
     {
-        $id = $this->route('number');
+        $id = $this->route('number')?->id ?? $this->route('number');
 
         return [
             'phone_number' => ['required', 'string', 'max:30', "unique:phone_numbers,phone_number,{$id}"],
