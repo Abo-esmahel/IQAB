@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     <title>{{ $title ?? config('app.name', 'IQAB') }}</title>
     <link rel="icon" href="{{ asset('images/logo.jpg') }}" type="image/jpeg">
     <link rel="shortcut icon" href="{{ asset('images/logo.jpg') }}" type="image/jpeg">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -14,9 +15,12 @@
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
                     colors: {
-                        primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' },
-                        dark: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
+                        primary: { 50: '#fdf9ec', 100: '#f9f0cd', 200: '#f2df9c', 300: '#eac968', 400: '#e2b342', 500: '#d89c2b', 600: '#b8861f', 700: '#8f6518', 800: '#754f19', 900: '#634317', 950: '#38250b' },
+                        dark: { 50: '#f8f9fa', 100: '#eef0f2', 200: '#dfe2e6', 300: '#c3c8cf', 400: '#9aa2ad', 500: '#727a86', 600: '#565d68', 700: '#3f454e', 800: '#262b33', 900: '#161a21', 950: '#0a0d13' }
                     }
                 }
             }
@@ -27,12 +31,13 @@
     </style>
 </head>
 <body class="h-full bg-dark-950 text-dark-100">
-    <div class="min-h-full" x-data="{ sidebarOpen: false }">
+    <div aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 h-[42rem] bg-[radial-gradient(60rem_26rem_at_50%_-8rem,rgba(216,156,43,0.08),transparent)]"></div>
+    <div class="relative min-h-full" x-data="{ sidebarOpen: false }">
         @auth
             @include('layouts.partials.sidebar')
         @endauth
 
-        <div class="{{ auth()->check() ? 'lg:pl-64' : '' }} min-h-screen flex flex-col">
+        <div class="{{ auth()->check() ? 'lg:ps-64' : '' }} min-h-screen flex flex-col">
             @include('layouts.partials.navbar')
 
             <main class="flex-1">

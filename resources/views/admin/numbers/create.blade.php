@@ -2,14 +2,17 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 class="text-2xl font-bold text-white">Publish Phone Number</h1>
-        <a href="{{ route('admin.numbers.index') }}" class="text-sm text-dark-400 hover:text-white transition-colors">&larr; Back to Numbers</a>
-    </div>
+    <x-admin.header
+        title="Publish Phone Number"
+        subtitle="Add a single virtual number or publish a batch."
+        backRoute="admin.numbers.index"
+        backLabel="Numbers"
+        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>'
+    />
 
     <div class="grid gap-6 lg:grid-cols-1 sm:grid-cols-2">
         {{-- Single number --}}
-        <div class="rounded-xl bg-dark-900 border border-dark-800 p-6" x-data="{ status: 'available' }">
+        <x-admin.card :padding="'p-6'" x-data="{ status: 'available' }">
             <h2 class="text-lg font-semibold text-white mb-4">Single Number</h2>
             <form method="POST" action="{{ route('admin.numbers.store') }}" class="space-y-4">
                 @csrf
@@ -69,14 +72,14 @@
                     <input type="datetime-local" name="expires_at" value="{{ old('expires_at') }}"
                            class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none [color-scheme:dark]">
                 </div>
-                <button type="submit" class="w-full rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
+                <button type="submit" class="w-full rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 hover:shadow-[0_0_24px_rgba(216,156,43,0.25)] transition-all">
                     Publish Number
                 </button>
             </form>
-        </div>
+        </x-admin.card>
 
         {{-- Bulk publish --}}
-        <div class="rounded-xl bg-dark-900 border border-dark-800 p-6">
+        <x-admin.card :padding="'p-6'">
             <h2 class="text-lg font-semibold text-white mb-1">Bulk Publish</h2>
             <p class="text-xs text-dark-500 mb-4">Paste one number per line. Shared settings below apply to all.</p>
             <form method="POST" action="{{ route('admin.numbers.store') }}" class="space-y-4">
@@ -122,11 +125,11 @@
                     <input type="datetime-local" name="expires_at" value="{{ old('expires_at') }}"
                            class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none [color-scheme:dark]">
                 </div>
-                <button type="submit" class="w-full rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
+                <button type="submit" class="w-full rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 hover:shadow-[0_0_24px_rgba(216,156,43,0.25)] transition-all">
                     Publish Bulk
                 </button>
             </form>
-        </div>
+        </x-admin.card>
     </div>
 </div>
 @endsection

@@ -2,14 +2,15 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <a href="{{ route('admin.offers.index') }}" class="inline-flex items-center gap-1 text-sm text-dark-400 hover:text-white mb-6">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        Back to Offers
-    </a>
+    <x-admin.header
+        title="Create Offer"
+        subtitle="Add a new promotional offer to the marketplace."
+        backRoute="admin.offers.index"
+        backLabel="Offers"
+        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>'
+    />
 
-    <div class="rounded-xl bg-dark-900 border border-dark-800 p-6">
-        <h1 class="text-lg font-semibold text-white mb-6">Create Offer</h1>
-
+    <x-admin.card>
         <form method="POST" action="{{ route('admin.offers.store') }}" class="space-y-5">
             @csrf
 
@@ -154,9 +155,9 @@
 
             <div class="flex justify-end gap-3 pt-4 border-t border-dark-800">
                 <a href="{{ route('admin.offers.index') }}" class="rounded-lg border border-dark-700 px-4 py-2 text-sm font-medium text-dark-300 hover:bg-dark-800 transition-colors">Cancel</a>
-                <button type="submit" class="rounded-lg bg-primary-600 px-6 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">Create Offer</button>
+                <button type="submit" class="rounded-lg bg-primary-600 px-6 py-2 text-sm font-semibold text-white hover:bg-primary-700 hover:shadow-[0_0_24px_rgba(216,156,43,0.25)] transition-all">Create Offer</button>
             </div>
         </form>
-    </div>
+    </x-admin.card>
 </div>
 @endsection

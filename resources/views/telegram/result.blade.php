@@ -14,8 +14,8 @@
                 <p class="text-sm text-dark-400">Target: {{ $request->target_identifier }}</p>
             </div>
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                bg-{{ match($request->status->value) { 'completed' => 'emerald', 'processing' => 'blue', 'failed' => 'red', default => 'yellow' } }}-500/10
-                text-{{ match($request->status->value) { 'completed' => 'emerald', 'processing' => 'blue', 'failed' => 'red', default => 'yellow' } }}-400">
+                bg-{{ match($request->status->value) { 'completed' => 'emerald', 'processing' => 'amber', 'failed' => 'red', default => 'yellow' } }}-500/10
+                text-{{ match($request->status->value) { 'completed' => 'emerald', 'processing' => 'amber', 'failed' => 'red', default => 'yellow' } }}-400">
                 {{ $request->status->label() }}
             </span>
         </div>

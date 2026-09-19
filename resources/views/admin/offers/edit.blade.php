@@ -2,14 +2,15 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <a href="{{ route('admin.offers.index') }}" class="inline-flex items-center gap-1 text-sm text-dark-400 hover:text-white mb-6">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        Back to Offers
-    </a>
+    <x-admin.header
+        title="Edit Offer"
+        subtitle="Update the promotional offer details for “{{ $offer->title }}”."
+        backRoute="admin.offers.index"
+        backLabel="Offers"
+        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>'
+    />
 
-    <div class="rounded-xl bg-dark-900 border border-dark-800 p-6">
-        <h1 class="text-lg font-semibold text-white mb-6">Edit: {{ $offer->title }}</h1>
-
+    <x-admin.card>
         <form method="POST" action="{{ route('admin.offers.update', $offer) }}" class="space-y-5">
             @csrf @method('PUT')
 
@@ -148,9 +149,9 @@
 
             <div class="flex justify-end gap-3 pt-4 border-t border-dark-800">
                 <a href="{{ route('admin.offers.index') }}" class="rounded-lg border border-dark-700 px-4 py-2 text-sm font-medium text-dark-300 hover:bg-dark-800 transition-colors">Cancel</a>
-                <button type="submit" class="rounded-lg bg-primary-600 px-6 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">Update Offer</button>
+                <button type="submit" class="rounded-lg bg-primary-600 px-6 py-2 text-sm font-semibold text-white hover:bg-primary-700 hover:shadow-[0_0_24px_rgba(216,156,43,0.25)] transition-all">Update Offer</button>
             </div>
         </form>
-    </div>
+    </x-admin.card>
 </div>
 @endsection

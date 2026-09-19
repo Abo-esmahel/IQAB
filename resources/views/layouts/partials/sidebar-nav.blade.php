@@ -25,9 +25,9 @@ $adminItems = [
 <div class="flex h-full flex-col">
     <div class="flex h-16 items-center gap-2 px-6 border-b border-dark-800">
         <img src="{{ asset('images/logo.jpg') }}" alt="IQAB" class="h-8 w-8 rounded-lg object-cover">
-        <span class="text-xl font-bold text-white">IQAB</span>
+        <span class="text-xl font-bold bg-gradient-to-r from-primary-300 via-primary-400 to-primary-600 bg-clip-text text-transparent">IQAB</span>
         @if(auth()->user()->role === 'admin')
-            <span class="ml-auto inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">Admin</span>
+            <span class="ms-auto inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">Admin</span>
         @endif
     </div>
     <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">

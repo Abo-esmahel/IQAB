@@ -54,15 +54,15 @@
                             <td class="py-3 px-4">
                                 @php
                                     $actionColor = match($log->action->value) {
-                                        'login' => 'blue',
-                                        'register' => 'emerald',
-                                        'purchase' => 'purple',
-                                        'adjustment' => 'amber',
-                                        'suspend' => 'red',
-                                        'activate' => 'green',
-                                        'webhook' => 'sky',
-                                        default => 'gray',
-                                    };
+                                    'login' => 'amber',
+                                    'register' => 'emerald',
+                                    'purchase' => 'primary',
+                                    'adjustment' => 'yellow',
+                                    'suspend' => 'red',
+                                    'activate' => 'emerald',
+                                    'webhook' => 'primary',
+                                    default => 'gray',
+                                };
                                 @endphp
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-{{ $actionColor }}-500/10 text-{{ $actionColor }}-400">
                                     {{ $log->action->label() }}

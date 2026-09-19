@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-label="IQAB golden eagle emblem">
+  <defs>
+    <linearGradient id="iq-eagle-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6d98b"/>
+      <stop offset="0.45" stop-color="#e2b342"/>
+      <stop offset="0.75" stop-color="#c28328"/>
+      <stop offset="1" stop-color="#7a5315"/>
+    </linearGradient>
+    <linearGradient id="iq-eagle-wing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8c052"/>
+      <stop offset="1" stop-color="#8a5f18"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="url(#iq-eagle-wing)" stroke="#6b4a12" stroke-width="2">
+    <path d="M244,430 L200,585 L222,585 L252,508 Z"/>
+    <path d="M256,430 L236,598 L260,598 L272,508 Z"/>
+    <path d="M276,430 L270,612 L300,612 L300,508 Z"/>
+    <path d="M344,430 L340,598 L364,598 L328,508 Z"/>
+    <path d="M356,430 L378,585 L400,585 L348,508 Z"/>
+  </g>
+
+  <g fill="url(#iq-eagle-wing)" stroke="#6b4a12" stroke-width="2">
+    <path d="M300,290 C255,190 120,120 55,185 C20,250 40,320 120,390 C180,365 240,340 300,345 Z"/>
+    <path d="M300,290 C345,190 480,120 545,185 C580,250 560,320 480,390 C420,365 360,340 300,345 Z"/>
+  </g>
+
+  <g fill="url(#iq-eagle-body)" stroke="#6b4a12" stroke-width="2">
+    <path d="M300,320 C260,235 160,175 110,225 C95,275 115,315 160,360 C205,355 255,345 300,355 Z"/>
+    <path d="M300,320 C340,235 440,175 490,225 C505,275 485,315 440,360 C395,355 345,345 300,355 Z"/>
+  </g>
+
+  <g fill="#f2d177ff" stroke="#6b4a12" stroke-width="1.5">
+    <path d="M300,340 C270,275 200,225 160,255 C150,285 175,305 215,340 C250,350 280,350 300,355 Z"/>
+    <path d="M300,340 C330,275 400,225 440,255 C450,285 425,305 385,340 C350,350 320,350 300,355 Z"/>
+  </g>
+
+  <g fill="none" stroke="#5b3f10" stroke-width="5" stroke-linecap="round" opacity="0.75">
+    <path d="M120,250 C130,270 138,292 128,315"/>
+    <path d="M145,230 C152,252 158,274 153,296"/>
+    <path d="M175,220 C180,242 186,264 182,284"/>
+    <path d="M480,250 C470,270 462,292 472,315"/>
+    <path d="M455,230 C448,252 442,274 447,296"/>
+    <path d="M425,220 C420,242 414,264 418,284"/>
+  </g>
+
+  <path d="M300,255 C338,264 352,296 348,346 C344,394 324,434 300,456 C276,434 256,394 252,346 C248,296 262,264 300,255 Z"
+        fill="url(#iq-eagle-body)" stroke="#6b4a12" stroke-width="2.5"/>
+  <path d="M286,300 Q300,348 314,300" fill="none" stroke="#6b4a12" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M300,130 C336,128 356,152 356,192 C356,228 334,248 300,248 C266,248 244,228 244,192 C244,152 264,132 300,130 Z"
+        fill="url(#iq-eagle-body)" stroke="#6b4a12" stroke-width="2.5"/>
+
+  <path d="M286,132 L278,104 L300,122 Z" fill="url(#iq-eagle-body)" stroke="#6b4a12" stroke-width="1.5"/>
+  <path d="M306,132 L314,108 L322,130 Z" fill="url(#iq-eagle-body)" stroke="#6b4a12" stroke-width="1.5"/>
+
+  <path d="M272,206 C282,215 318,215 328,206 L322,240 C311,256 289,256 278,240 Z"
+        fill="url(#iq-eagle-body)" stroke="#6b4a12" stroke-width="2"/>
+  <path d="M280,224 L300,238 L322,224 L300,232 Z" fill="#e9a83c"/>
+
+  <g>
+    <circle cx="284" cy="186" r="13" fill="#f5e7c0" stroke="#6b4a12" stroke-width="2"/>
+    <circle cx="316" cy="186" r="13" fill="#f5e7c0" stroke="#6b4a12" stroke-width="2"/>
+    <circle cx="284" cy="186" r="6.5" fill="#2a1d07"/>
+    <circle cx="316" cy="186" r="6.5" fill="#2a1d07"/>
+    <path d="M262,170 Q276,158 294,172" fill="none" stroke="#4a330e" stroke-width="5" stroke-linecap="round"/>
+    <path d="M338,170 Q324,158 306,172" fill="none" stroke="#4a330e" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

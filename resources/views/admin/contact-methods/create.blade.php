@@ -2,14 +2,15 @@
 
 @section('content')
 <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <a href="{{ route('admin.contact-methods.index') }}" class="inline-flex items-center gap-1 text-sm text-dark-400 hover:text-white mb-6">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        Back to Contact Methods
-    </a>
+    <x-admin.header
+        title="Add Contact Method"
+        subtitle="Set up a new support channel shown on the Contact page."
+        backRoute="admin.contact-methods.index"
+        backLabel="Contact Methods"
+        icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>'
+    />
 
-    <div class="rounded-xl bg-dark-900 border border-dark-800 p-6">
-        <h1 class="text-lg font-semibold text-white mb-6">Add Contact Method</h1>
-
+    <x-admin.card>
         <form method="POST" action="{{ route('admin.contact-methods.store') }}" class="space-y-5">
             @csrf
 
@@ -77,9 +78,9 @@
 
             <div class="flex justify-end gap-3 pt-4 border-t border-dark-800">
                 <a href="{{ route('admin.contact-methods.index') }}" class="rounded-lg border border-dark-700 px-4 py-2 text-sm font-medium text-dark-300 hover:bg-dark-800 transition-colors">Cancel</a>
-                <button type="submit" class="rounded-lg bg-primary-600 px-6 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">Create Contact Method</button>
+                <button type="submit" class="rounded-lg bg-primary-600 px-6 py-2 text-sm font-semibold text-white hover:bg-primary-700 hover:shadow-[0_0_24px_rgba(216,156,43,0.25)] transition-all">Create Contact Method</button>
             </div>
         </form>
-    </div>
+    </x-admin.card>
 </div>
 @endsection

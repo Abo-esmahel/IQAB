@@ -5,10 +5,10 @@
     <h1 class="text-2xl font-bold text-white mb-6">Dashboard</h1>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <x-stat-card title="Active Numbers" value="{{ $activeNumbers }}" color="blue" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>' />
-        <x-stat-card title="Total Numbers" value="{{ $totalNumbers }}" color="purple" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>' />
-        <x-stat-card title="Messages" value="{{ $totalMessages }}" color="amber" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>' />
-        <x-stat-card title="Total Purchases" value="{{ $recentPurchases->count() }}" color="emerald" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' />
+        <x-stat-card title="Active Numbers" value="{{ $activeNumbers }}" color="primary" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>' />
+        <x-stat-card title="Total Numbers" value="{{ $totalNumbers }}" color="primary" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>' />
+        <x-stat-card title="Messages" value="{{ $totalMessages }}" color="primary" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>' />
+        <x-stat-card title="Total Purchases" value="{{ $recentPurchases->count() }}" color="primary" icon='<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' />
     </div>
 
     <div class="grid lg:grid-cols-2 gap-6 mb-8">
@@ -24,7 +24,7 @@
                     <span class="text-xs font-medium text-dark-300">My Numbers</span>
                 </a>
                 <a href="{{ route('telegram.index') }}" class="rounded-lg bg-dark-800 border border-dark-700 p-4 text-center hover:border-primary-500/50 transition-colors">
-                    <svg class="h-6 w-6 text-sky-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <svg class="h-6 w-6 text-primary-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                     <span class="text-xs font-medium text-dark-300">Telegram</span>
                 </a>
             </div>

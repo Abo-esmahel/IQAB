@@ -11,17 +11,30 @@
                 extend: {
                     colors: {
                         dark: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            200: '#e2e8f0',
-                            300: '#cbd5e1',
-                            400: '#94a3b8',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1e293b',
-                            900: '#0f172a',
-                            950: '#020617',
+                            50: '#f8f9fa',
+                            100: '#eef0f2',
+                            200: '#dfe2e6',
+                            300: '#c3c8cf',
+                            400: '#9aa2ad',
+                            500: '#727a86',
+                            600: '#565d68',
+                            700: '#3f454e',
+                            800: '#262b33',
+                            900: '#161a21',
+                            950: '#0a0d13',
+                        },
+                        primary: {
+                            50: '#fdf9ec',
+                            100: '#f9f0cd',
+                            200: '#f2df9c',
+                            300: '#eac968',
+                            400: '#e2b342',
+                            500: '#d89c2b',
+                            600: '#b8861f',
+                            700: '#8f6518',
+                            800: '#754f19',
+                            900: '#634317',
+                            950: '#38250b',
                         }
                     }
                 }
@@ -33,7 +46,7 @@
     <div class="text-center">
         <h1 class="text-7xl sm:text-9xl font-bold text-white mb-4">404</h1>
         <p class="text-xl text-dark-400 mb-8">The page you're looking for doesn't exist.</p>
-        <a href="/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
+        <a href="/" class="inline-block bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">
             Go Home
         </a>
     </div>
