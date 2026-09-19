@@ -47,6 +47,7 @@ Route::get('/contact', function () {
 // Authenticated Routes
 Route::middleware(['auth', 'maintenance.mode'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/live', [DashboardController::class, 'live'])->name('dashboard.live');
 
     // Profile
     Route::get('/profile', [AuthController::class, 'showProfile'])->name('profile');
