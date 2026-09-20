@@ -21,7 +21,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
             <div class="rounded-lg bg-dark-800 p-3 text-center">
                 <p class="text-xs text-dark-500">Price</p>
-                <p class="text-sm font-semibold text-white">{{ number_format($purchase->price, 2) }} SAR</p>
+                <p class="text-sm font-semibold text-white">{{ number_format($purchase->price, 2) }} {{ currency() }}</p>
             </div>
             <div class="rounded-lg bg-dark-800 p-3 text-center">
                 <p class="text-xs text-dark-500">Purchased</p>

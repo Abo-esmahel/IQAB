@@ -78,6 +78,18 @@ class AdminSettingController extends Controller
                 ],
             ],
         ],
+        'purchase' => [
+            'label' => 'Purchase & Contact',
+            'icon' => 'shopping-cart',
+            'settings' => [
+                'purchase.telegram_contact' => [
+                    'label' => 'Telegram Contact Link',
+                    'type' => 'url',
+                    'placeholder' => 'https://t.me/Kh_505_p',
+                    'description' => 'Link opened when user clicks Buy / Purchase. Change it anytime without editing code.',
+                ],
+            ],
+        ],
         'system' => [
             'label' => 'System & Initial Data',
             'icon' => 'cog',

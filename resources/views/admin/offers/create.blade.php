@@ -47,12 +47,12 @@
                 <h3 class="text-sm font-semibold text-white mb-3">Pricing</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-dark-300 mb-1.5">Original Price (SAR)</label>
+                        <label class="block text-sm font-medium text-dark-300 mb-1.5">Original Price ({{ currency() }})</label>
                         <input type="number" step="0.01" name="original_price" value="{{ old('original_price') }}" placeholder="100.00"
                                class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-dark-300 mb-1.5">Offer Price (SAR) <span class="text-red-400">*</span></label>
+                        <label class="block text-sm font-medium text-dark-300 mb-1.5">Offer Price ({{ currency() }}) <span class="text-red-400">*</span></label>
                         <input type="number" step="0.01" name="offer_price" value="{{ old('offer_price') }}" required placeholder="70.00"
                                class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
                     </div>
@@ -73,7 +73,7 @@
                         <select name="related_service_id" class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white focus:border-primary-500 outline-none">
                             <option value="">None</option>
                             @foreach($services as $service)
-                                <option value="{{ $service->id }}" {{ old('related_service_id') == $service->id ? 'selected' : '' }}>{{ $service->name }} ({{ number_format($service->price, 2) }} SAR)</option>
+                                <option value="{{ $service->id }}" {{ old('related_service_id') == $service->id ? 'selected' : '' }}>{{ $service->name }} ({{ number_format($service->price, 2) }} {{ currency() }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -82,7 +82,7 @@
                         <select name="related_number_id" class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white focus:border-primary-500 outline-none">
                             <option value="">None</option>
                             @foreach($numbers as $number)
-                                <option value="{{ $number->id }}" {{ old('related_number_id') == $number->id ? 'selected' : '' }}>{{ $number->phone_number }} ({{ number_format($number->price, 2) }} SAR)</option>
+                                <option value="{{ $number->id }}" {{ old('related_number_id') == $number->id ? 'selected' : '' }}>{{ $number->phone_number }} ({{ number_format($number->price, 2) }} {{ currency() }})</option>
                             @endforeach
                         </select>
                     </div>

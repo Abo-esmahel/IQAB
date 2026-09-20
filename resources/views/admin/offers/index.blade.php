@@ -53,9 +53,9 @@
                     <td class="px-4 py-3">
                         <div>
                             @if($offer->original_price)
-                                <p class="text-xs text-dark-500 line-through">{{ number_format($offer->original_price, 2) }} SAR</p>
+                                <p class="text-xs text-dark-500 line-through">{{ number_format($offer->original_price, 2) }} {{ currency() }}</p>
                             @endif
-                            <p class="text-white font-semibold">{{ number_format($offer->offer_price, 2) }} SAR</p>
+                            <p class="text-white font-semibold">{{ number_format($offer->offer_price, 2) }} {{ currency() }}</p>
                             @if($offer->discount_percent)
                                 <p class="text-xs text-emerald-400">{{ number_format($offer->discount_percent, 0) }}% OFF</p>
                             @endif

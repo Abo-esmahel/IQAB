@@ -35,4 +35,9 @@ class UserPolicy
     {
         return $auth->isAdmin();
     }
+
+    public function delete(User $auth, User $user): bool
+    {
+        return $auth->isAdmin() && $auth->id !== $user->id;
+    }
 }

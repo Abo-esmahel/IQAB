@@ -13,7 +13,7 @@
             <div class="mb-4">
                 <h3 class="text-lg font-semibold text-white">{{ $service->name }}</h3>
                 <p class="text-sm text-dark-400 mt-1">{{ $service->description }}</p>
-                <p class="text-xl font-bold text-primary-400 mt-3">{{ number_format($service->price, 2) }} SAR</p>
+                <p class="text-xl font-bold text-primary-400 mt-3">{{ number_format($service->price, 2) }} {{ currency() }}</p>
             </div>
             <button @click="showForm = !showForm" class="w-full rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
                 Use Service
@@ -28,7 +28,7 @@
                         <input type="text" name="target_identifier" required placeholder="@username or phone"
                                class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
                     </div>
-                    <button type="submit" onclick="return confirm('Submit this request for {{ number_format($service->price, 2) }} SAR?')"
+                    <button type="submit" onclick="return confirm('Submit this request for {{ number_format($service->price, 2) }} {{ currency() }}?')"
                             class="w-full rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors">
                         Submit Request
                     </button>

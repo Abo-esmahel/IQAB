@@ -87,7 +87,7 @@ class Offer extends Model
         if ($this->original_price && $this->offer_price) {
             $saved = $this->original_price - $this->offer_price;
             if ($saved > 0) {
-                return number_format($saved, 2) . ' SAR OFF';
+                return number_format($saved, 2) . ' '.currency().' OFF';
             }
         }
         return null;

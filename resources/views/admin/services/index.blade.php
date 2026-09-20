@@ -48,7 +48,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 text-dark-300">{{ $service->category ?? '-' }}</td>
-                        <td class="px-6 py-4 text-white font-medium whitespace-nowrap">{{ number_format($service->price, 2) }} SAR</td>
+                        <td class="px-6 py-4 text-white font-medium whitespace-nowrap">{{ number_format($service->price, 2) }} {{ currency() }}</td>
                         <td class="px-6 py-4">
                             @if($service->is_active)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20">Active</span>

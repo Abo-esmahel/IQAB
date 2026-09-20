@@ -51,7 +51,15 @@
                             </td>
                             <td class="py-3 px-4 text-dark-500 hidden sm:table-cell">{{ $user->created_at->format('M d, Y') }}</td>
                             <td class="py-3 px-4 text-right">
-                                <a href="{{ route('admin.users.show', $user) }}" class="text-primary-400 hover:text-primary-300 text-sm font-medium">View</a>
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="{{ route('admin.users.show', $user) }}" class="text-primary-400 hover:text-primary-300 text-sm font-medium">View</a>
+                                    @if(auth()->id() !== $user->id)
+                                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete {{ $user->email }} permanently?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-red-400 hover:text-red-300 text-sm">Delete</button>
+                                        </form>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach

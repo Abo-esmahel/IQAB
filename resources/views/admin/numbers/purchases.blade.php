@@ -42,7 +42,7 @@
                                 <p class="text-xs text-dark-500">{{ $purchase->user?->email ?? '' }}</p>
                             </td>
                             <td class="py-3 px-4 text-dark-300">{{ $purchase->phoneNumber?->country ?? 'N/A' }}</td>
-                            <td class="py-3 px-4 text-right text-dark-200">{{ number_format($purchase->price ?? 0, 2) }} SAR</td>
+                            <td class="py-3 px-4 text-right text-dark-200">{{ number_format($purchase->price ?? 0, 2) }} {{ currency() }}</td>
                             <td class="py-3 px-4">
                                 @php
                                     $statusColor = match($purchase->status->value) {

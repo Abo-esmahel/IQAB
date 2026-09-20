@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AdminOfferController;
 use App\Http\Controllers\Admin\AdminContactMethodController;
 use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\Admin\AdminTelegramServiceController;
 use App\Http\Controllers\Admin\TelegramBotController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\MarketplaceController;
@@ -87,6 +88,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
     Route::post('/users/{user}/suspend', [AdminUserController::class, 'suspend'])->name('users.suspend');
     Route::post('/users/{user}/activate', [AdminUserController::class, 'activate'])->name('users.activate');
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+    Route::post('/users/{user}/assign-number', [AdminUserController::class, 'assignNumber'])->name('users.assign-number');
 
     // Numbers
     Route::get('/numbers', [AdminNumberController::class, 'index'])->name('numbers.index');
@@ -131,6 +134,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Settings (KV store / system requirements & initial data)
     Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
     Route::put('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
+
+    // Telegram Services (admin CRUD for Telegram Tools)
+    Route::get('/telegram-services', [AdminTelegramServiceController::class, 'index'])->name('telegram-services.index');
+    Route::get('/telegram-services/create', [AdminTelegramServiceController::class, 'create'])->name('telegram-services.create');
+    Route::post('/telegram-services', [AdminTelegramServiceController::class, 'store'])->name('telegram-services.store');
+    Route::get('/telegram-services/{telegramService}/edit', [AdminTelegramServiceController::class, 'edit'])->name('telegram-services.edit');
+    Route::put('/telegram-services/{telegramService}', [AdminTelegramServiceController::class, 'update'])->name('telegram-services.update');
+    Route::delete('/telegram-services/{telegramService}', [AdminTelegramServiceController::class, 'destroy'])->name('telegram-services.destroy');
 
     // Telegram Bot management
     Route::get('/telegram/bot', [TelegramBotController::class, 'index'])->name('telegram.bot.index');

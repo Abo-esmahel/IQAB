@@ -28,7 +28,7 @@
                 </div>
                 <div class="text-right">
                     <p class="text-3xl font-bold text-primary-400">{{ number_format($service->price, 2) }}</p>
-                    <p class="text-sm text-dark-400">SAR</p>
+                    <p class="text-sm text-dark-400">{{ currency() }}</p>
                 </div>
             </div>
 
@@ -41,8 +41,8 @@
             <div class="rounded-xl bg-dark-800 border border-dark-700 p-6">
                 <h2 class="text-lg font-semibold text-white mb-4">Purchase Service</h2>
                 <div class="space-y-4">
-                    <p class="text-sm text-dark-400">Total: <span class="font-semibold text-white">{{ number_format($service->price, 2) }} SAR</span></p>
-                    <a href="{{ config('app.telegram_contact') }}" target="_blank" rel="noopener"
+                    <p class="text-sm text-dark-400">Total: <span class="font-semibold text-white">{{ number_format($service->price, 2) }} {{ currency() }}</span></p>
+                    <a href="{{ telegram_contact() }}" target="_blank" rel="noopener"
                        class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
                         <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
                         Purchase via Telegram

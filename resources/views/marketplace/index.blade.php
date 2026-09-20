@@ -126,9 +126,9 @@
                         <div class="flex items-end justify-between">
                             <div>
                                 @if($offer->original_price)
-                                    <p class="text-xs text-dark-500 line-through">{{ number_format($offer->original_price, 2) }} SAR</p>
+                                    <p class="text-xs text-dark-500 line-through">{{ number_format($offer->original_price, 2) }} {{ currency() }}</p>
                                 @endif
-                                <p class="text-xl font-bold text-amber-400">{{ number_format($offer->offer_price, 2) }} <span class="text-sm text-dark-400">SAR</span></p>
+                                <p class="text-xl font-bold text-amber-400">{{ number_format($offer->offer_price, 2) }} <span class="text-sm text-dark-400">{{ currency() }}</span></p>
                                 @if($offer->discount_percent)
                                     <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 mt-1">{{ number_format($offer->discount_percent, 0) }}% OFF</span>
                                 @endif
@@ -171,7 +171,7 @@
                     <div class="p-4">
                         <div class="flex items-start justify-between gap-2">
                             <h3 class="font-semibold text-white group-hover:text-primary-400 transition-colors">{{ $service->name }}</h3>
-                            <span class="text-sm font-bold text-primary-400 shrink-0">{{ number_format($service->price, 2) }} SAR</span>
+                            <span class="text-sm font-bold text-primary-400 shrink-0">{{ number_format($service->price, 2) }} {{ currency() }}</span>
                         </div>
                         @if($service->short_description)
                             <p class="text-xs text-dark-400 mt-1 line-clamp-2">{{ $service->short_description }}</p>
@@ -206,9 +206,9 @@
                     <div class="flex items-end justify-between mt-4">
                         <div>
                             <p class="text-xs text-dark-500">Price</p>
-                            <p class="text-xl font-bold text-white">{{ number_format($number->price, 2) }} <span class="text-sm text-dark-400">SAR</span></p>
+                            <p class="text-xl font-bold text-white">{{ number_format($number->price, 2) }} <span class="text-sm text-dark-400">{{ currency() }}</span></p>
                         </div>
-                        <a href="{{ config('app.telegram_contact') }}" target="_blank" rel="noopener"
+                        <a href="{{ telegram_contact() }}" target="_blank" rel="noopener"
                            class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors">
                             <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
                             Buy via Telegram
@@ -256,9 +256,9 @@
                         <div class="flex items-end justify-between">
                             <div>
                                 @if($offer->original_price)
-                                    <p class="text-sm text-dark-500 line-through">{{ number_format($offer->original_price, 2) }} SAR</p>
+                                    <p class="text-sm text-dark-500 line-through">{{ number_format($offer->original_price, 2) }} {{ currency() }}</p>
                                 @endif
-                                <p class="text-2xl font-bold text-amber-400">{{ number_format($offer->offer_price, 2) }} <span class="text-sm text-dark-400">SAR</span></p>
+                                <p class="text-2xl font-bold text-amber-400">{{ number_format($offer->offer_price, 2) }} <span class="text-sm text-dark-400">{{ currency() }}</span></p>
                                 @if($offer->discount_percent)
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-400 mt-1">{{ number_format($offer->discount_percent, 0) }}% OFF</span>
                                 @endif
@@ -303,9 +303,9 @@
                     <div class="flex items-end justify-between mt-4">
                         <div>
                             <p class="text-xs text-dark-500">Price</p>
-                            <p class="text-xl font-bold text-white">{{ number_format($number->price, 2) }} <span class="text-sm text-dark-400">SAR</span></p>
+                            <p class="text-xl font-bold text-white">{{ number_format($number->price, 2) }} <span class="text-sm text-dark-400">{{ currency() }}</span></p>
                         </div>
-                        <a href="{{ config('app.telegram_contact') }}" target="_blank" rel="noopener"
+                        <a href="{{ telegram_contact() }}" target="_blank" rel="noopener"
                            class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors">
                             <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
                             Buy via Telegram
@@ -342,7 +342,7 @@
                     <div class="p-4">
                         <div class="flex items-start justify-between gap-2">
                             <h3 class="font-semibold text-white group-hover:text-primary-400 transition-colors">{{ $service->name }}</h3>
-                            <span class="text-sm font-bold text-primary-400 shrink-0">{{ number_format($service->price, 2) }} SAR</span>
+                            <span class="text-sm font-bold text-primary-400 shrink-0">{{ number_format($service->price, 2) }} {{ currency() }}</span>
                         </div>
                         @if($service->short_description)
                             <p class="text-sm text-dark-400 mt-2 line-clamp-2">{{ $service->short_description }}</p>

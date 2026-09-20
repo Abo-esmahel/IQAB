@@ -13,9 +13,9 @@
         <div class="mt-4 flex items-end justify-between">
             <div>
                 <p class="text-[11px] uppercase tracking-wide text-dark-500">السعر</p>
-                <p class="text-xl font-bold text-white">{{ number_format($number->price, 2) }} <span class="text-sm text-dark-400">SAR</span></p>
+                <p class="text-xl font-bold text-white">{{ number_format($number->price, 2) }} <span class="text-sm text-dark-400">{{ currency() }}</span></p>
             </div>
-            <a href="{{ config('app.telegram_contact') }}" target="_blank" rel="noopener"
+            <a href="{{ telegram_contact() }}" target="_blank" rel="noopener"
                class="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-700">
                 <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
                 شراء عبر تلغرام

@@ -14,7 +14,7 @@
     <div class="p-4">
         <div class="flex items-start justify-between gap-2">
             <h3 class="font-semibold text-white transition-colors group-hover:text-primary-400">{{ $service->name }}</h3>
-            <span class="shrink-0 text-sm font-bold text-primary-400">{{ number_format($service->price, 2) }} SAR</span>
+            <span class="shrink-0 text-sm font-bold text-primary-400">{{ number_format($service->price, 2) }} {{ currency() }}</span>
         </div>
 
         @if($service->short_description)

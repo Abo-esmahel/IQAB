@@ -49,7 +49,7 @@
                         <tr class="border-b border-dark-800/50 hover:bg-dark-800/50">
                             <td class="py-3 px-4 text-white font-mono font-medium">{{ $number->phone_number }}</td>
                             <td class="py-3 px-4 text-dark-300">{{ $number->country }}</td>
-                            <td class="py-3 px-4 text-dark-200">{{ number_format($number->price, 2) }} SAR</td>
+                            <td class="py-3 px-4 text-dark-200">{{ number_format($number->price, 2) }} {{ currency() }}</td>
                             <td class="py-3 px-4">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-{{ $number->status->color() }}-500/10 text-{{ $number->status->color() }}-400">
                                     {{ $number->status->label() }}

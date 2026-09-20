@@ -42,7 +42,7 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                    <label class="block text-sm font-medium text-dark-300 mb-1.5">Price (SAR)</label>
+                    <label class="block text-sm font-medium text-dark-300 mb-1.5">Price ({{ currency() }})</label>
                     <input type="number" step="0.01" name="price" value="{{ old('price', $number->price) }}"
                            class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none">
                 </div>
