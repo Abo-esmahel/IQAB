@@ -1,7 +1,7 @@
 <a href="{{ route('services.show', $service) }}" class="group relative overflow-hidden rounded-2xl border border-dark-800 bg-dark-900 transition-all hover:-translate-y-0.5 hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-900/20">
     @if($service->image)
         <div class="relative h-36 overflow-hidden bg-dark-800">
-            <img src="{{ $service->image }}" alt="{{ $service->name }}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105">
+            <img loading="lazy" decoding="async" src="{{ $service->image }}" alt="{{ $service->name }}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105">
             <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
         </div>
     @else

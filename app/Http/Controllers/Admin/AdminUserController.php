@@ -11,6 +11,12 @@ use App\Models\NumberPurchase;
 use App\Models\PhoneNumber;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NumberAssignedMail;
+use App\Mail\WelcomeMail;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class AdminUserController extends Controller
 {
@@ -39,6 +45,80 @@ class AdminUserController extends Controller
         $user->load('numberPurchases.phoneNumber');
 
         return view('admin.users.show', compact('user'));
+    }
+
+    public function create()
+    {
+        return view('admin.users.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'confirmed', Password::min(8)->letters()->numbers()],
+            'role' => ['required', 'string', 'in:user,admin'],
+            'status' => ['required', 'string', 'in:active,suspended'],
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => $validated['role'],
+            'status' => $validated['status'],
+            'email_verified_at' => now(),
+        ]);
+
+        $this->logAudit(AuditAction::Create, $user, [], $user->toArray(), "Created user {$user->email} with role {$user->role}");
+
+        Mail::to($user)->queue(new WelcomeMail($user, $validated['password']));
+
+        return redirect()->route('admin.users.index')
+            ->with('success', "User {$user->email} created ({$user->role}).");
+    }
+
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password' => ['nullable', 'string', 'confirmed', Password::min(8)->letters()->numbers()],
+            'role' => ['required', 'string', 'in:user,admin'],
+            'status' => ['required', 'string', 'in:active,suspended'],
+        ]);
+
+        $isSelf = $user->id === $request->user()->id;
+
+        if ($isSelf && $validated['role'] !== 'admin') {
+            return back()->withErrors(['role' => 'You cannot remove your own admin role.'])->withInput();
+        }
+
+        if ($isSelf && $validated['status'] !== 'active') {
+            return back()->withErrors(['status' => 'You cannot suspend your own account.'])->withInput();
+        }
+
+        $old = $user->toArray();
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = $validated['role'];
+        $user->status = $validated['status'];
+        if (! empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+        $user->save();
+
+        $this->logAudit(AuditAction::Update, $user, $old, $user->toArray(), "Updated user {$user->email}");
+
+        return redirect()->route('admin.users.show', $user)
+            ->with('success', 'User updated successfully.');
     }
 
     public function suspend(User $user)
@@ -114,6 +194,8 @@ class AdminUserController extends Controller
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
         ]);
+
+        Mail::to($user)->queue(new NumberAssignedMail($user, $purchase));
 
         return back()->with('success', "Number {$phoneNumber->phone_number} assigned to {$user->name}. It now appears in their numbers.");
     }

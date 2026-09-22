@@ -16,4 +16,9 @@ class NumberPurchasePolicy
     {
         return $purchase->user_id === $auth->id;
     }
+
+    public function manage(User $auth, NumberPurchase $purchase): bool
+    {
+        return $purchase->user_id === $auth->id;
+    }
 }

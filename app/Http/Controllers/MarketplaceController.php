@@ -3,23 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PhoneNumberStatus;
+use App\Http\Requests\CatalogFilterRequest;
 use App\Models\PhoneNumber;
 use App\Models\MarketService;
 use App\Models\Offer;
-use Illuminate\Http\Request;
 
 class MarketplaceController extends Controller
 {
-    public function index(Request $request)
+    public function index(CatalogFilterRequest $request)
     {
-        $tab = $request->get('tab', 'all');
+        $f = $request->filters();
+        $tab = $f['tab'];
 
         $numbers = PhoneNumber::where('status', PhoneNumberStatus::Available);
         $services = MarketService::active();
         $offers = Offer::active();
 
-        if ($request->filled('search')) {
-            $search = '%' . str_replace(['%', '_'], ['\%', '\_'], $request->search) . '%';
+        if (! empty($f['search'])) {
+            $search = $request->like($f['search']);
             $numbers->where(function ($q) use ($search) {
                 $q->where('phone_number', 'like', $search)
                   ->orWhere('country', 'like', $search);
@@ -34,28 +35,35 @@ class MarketplaceController extends Controller
             });
         }
 
-        if ($request->filled('country')) {
-            $numbers->where('country', $request->country);
+        if (! empty($f['country'])) {
+            $numbers->where('country', $f['country']);
         }
 
-        if ($request->filled('category')) {
-            $services->where('category', $request->category);
+        if (! empty($f['category'])) {
+            $services->where('category', $f['category']);
         }
 
-        if ($request->filled('min_price')) {
-            $numbers->where('price', '>=', $request->min_price);
-            $services->where('price', '>=', $request->min_price);
-            $offers->where('offer_price', '>=', $request->min_price);
+        if (isset($f['min_price'])) {
+            $numbers->where('price', '>=', $f['min_price']);
+            $services->where('price', '>=', $f['min_price']);
+            $offers->where('offer_price', '>=', $f['min_price']);
         }
 
-        if ($request->filled('max_price')) {
-            $numbers->where('price', '<=', $request->max_price);
-            $services->where('price', '<=', $request->max_price);
-            $offers->where('offer_price', '<=', $request->max_price);
+        if (isset($f['max_price'])) {
+            $numbers->where('price', '<=', $f['max_price']);
+            $services->where('price', '<=', $f['max_price']);
+            $offers->where('offer_price', '<=', $f['max_price']);
         }
 
-        $numbers = $numbers->orderByDesc('created_at')->paginate(12)->withQueryString();
-        $services = $services->orderBy('sort_order')->orderByDesc('created_at')->paginate(12)->withQueryString();
+        $this->applySort($numbers, $f['sort'], 'price', 'created_at');
+        if ($f['sort'] === 'newest') {
+            $services->orderBy('sort_order')->orderByDesc('created_at');
+        } else {
+            $this->applySort($services, $f['sort'], 'price', 'created_at');
+        }
+
+        $numbers = $numbers->paginate(12)->withQueryString();
+        $services = $services->paginate(12)->withQueryString();
         $offers = $offers->featured()->take(6)->get();
 
         $countries = PhoneNumber::where('status', PhoneNumberStatus::Available)->distinct()->pluck('country')->filter()->values();
@@ -70,5 +78,14 @@ class MarketplaceController extends Controller
             'tab', 'numbers', 'services', 'offers', 'countries', 'categories',
             'allCount', 'numbersCount', 'servicesCount', 'offersCount'
         ));
+    }
+
+    protected function applySort($query, string $sort, string $priceColumn, string $dateColumn): void
+    {
+        match ($sort) {
+            'price_asc' => $query->orderBy($priceColumn)->orderByDesc($dateColumn),
+            'price_desc' => $query->orderByDesc($priceColumn)->orderByDesc($dateColumn),
+            default => $query->orderByDesc($dateColumn),
+        };
     }
 }

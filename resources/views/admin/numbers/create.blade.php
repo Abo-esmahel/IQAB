@@ -14,7 +14,7 @@
         {{-- Single number --}}
         <x-admin.card :padding="'p-6'" x-data="{ status: 'available' }">
             <h2 class="text-lg font-semibold text-white mb-4">Single Number</h2>
-            <form method="POST" action="{{ route('admin.numbers.store') }}" class="space-y-4">
+            <form method="POST" action="{{ route('admin.numbers.store') }}" class="space-y-4" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label class="block text-sm font-medium text-dark-300 mb-1.5">Phone Number</label>
@@ -72,6 +72,7 @@
                     <input type="datetime-local" name="expires_at" value="{{ old('expires_at') }}"
                            class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none [color-scheme:dark]">
                 </div>
+                @include('admin.partials.image-upload', ['label' => 'Image (optional)'])
                 <button type="submit" class="w-full rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 hover:shadow-[0_0_24px_rgba(216,156,43,0.25)] transition-all">
                     Publish Number
                 </button>

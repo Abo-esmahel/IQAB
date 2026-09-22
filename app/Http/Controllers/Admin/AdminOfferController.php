@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Concerns\HandlesImageUploads;
 use App\Models\Offer;
 use App\Models\MarketService;
 use App\Models\PhoneNumber;
@@ -11,6 +12,7 @@ use Illuminate\Support\Str;
 
 class AdminOfferController extends Controller
 {
+    use HandlesImageUploads;
     public function index(Request $request)
     {
         $query = Offer::with('relatedService', 'relatedNumber');
@@ -51,6 +53,7 @@ class AdminOfferController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'max:500'],
+            'image_file' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:2048'],
             'badge' => ['nullable', 'string', 'max:50'],
             'original_price' => ['nullable', 'numeric', 'min:0'],
             'offer_price' => ['required', 'numeric', 'min:0'],
@@ -79,6 +82,7 @@ class AdminOfferController extends Controller
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['cta_text'] = $validated['cta_text'] ?? 'Get Offer';
         $validated['used_count'] = 0;
+        $validated['image'] = $this->resolveImage($request, null, 'offers');
 
         Offer::create($validated);
 
@@ -103,6 +107,7 @@ class AdminOfferController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'max:500'],
+            'image_file' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:2048'],
             'badge' => ['nullable', 'string', 'max:50'],
             'original_price' => ['nullable', 'numeric', 'min:0'],
             'offer_price' => ['required', 'numeric', 'min:0'],
@@ -132,6 +137,7 @@ class AdminOfferController extends Controller
 
         $validated['is_active'] = $request->boolean('is_active', $offer->is_active);
         $validated['is_featured'] = $request->boolean('is_featured', $offer->is_featured);
+        $validated['image'] = $this->resolveImage($request, $offer->image, 'offers');
 
         $offer->update($validated);
 
@@ -140,6 +146,7 @@ class AdminOfferController extends Controller
 
     public function destroy(Offer $offer)
     {
+        $this->deleteStoredImage($offer->image);
         $offer->delete();
         return redirect()->route('admin.offers.index')->with('success', 'Offer deleted.');
     }

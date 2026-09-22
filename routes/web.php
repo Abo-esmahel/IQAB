@@ -32,6 +32,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
+
+    // Password Reset
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->middleware('throttle:5,1')->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->middleware('throttle:5,1')->name('password.store');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -59,6 +65,10 @@ Route::middleware(['auth', 'maintenance.mode'])->group(function () {
     // My Numbers
     Route::get('/dashboard/numbers', [MyNumberController::class, 'index'])->name('my-numbers.index');
     Route::get('/dashboard/numbers/{purchase}', [MyNumberController::class, 'show'])->name('my-numbers.show');
+    Route::put('/dashboard/numbers/{purchase}', [MyNumberController::class, 'update'])->name('my-numbers.update');
+    Route::post('/dashboard/numbers/{purchase}/release', [MyNumberController::class, 'release'])->name('my-numbers.release');
+    Route::get('/dashboard/numbers/{purchase}/replace', [MyNumberController::class, 'showReplace'])->name('my-numbers.replace');
+    Route::post('/dashboard/numbers/{purchase}/replace', [MyNumberController::class, 'replace'])->name('my-numbers.replace.store');
 
     // Inbox
     Route::get('/dashboard/numbers/{purchase}/inbox', [InboxController::class, 'index'])->name('inbox.index');
@@ -75,9 +85,9 @@ Route::middleware(['auth', 'maintenance.mode'])->group(function () {
     Route::get('/services/{service:slug}', [ServiceController::class, 'show'])->name('services.show');
 });
 
-// Webhook Routes (no auth, validated by signature)
-Route::post('/api/webhooks/phone/messages', [WebhookController::class, 'phoneMessages']);
-Route::post('/api/webhooks/telegram', [WebhookController::class, 'telegram']);
+// Webhook Routes (no auth, validated by signature, flood-protected)
+Route::post('/api/webhooks/phone/messages', [WebhookController::class, 'phoneMessages'])->middleware('throttle:120,1');
+Route::post('/api/webhooks/telegram', [WebhookController::class, 'telegram'])->middleware('throttle:120,1');
 
 // Admin Routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -85,7 +95,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Users
     Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
     Route::post('/users/{user}/suspend', [AdminUserController::class, 'suspend'])->name('users.suspend');
     Route::post('/users/{user}/activate', [AdminUserController::class, 'activate'])->name('users.activate');
     Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');

@@ -11,7 +11,7 @@
     />
 
     <x-admin.card>
-        <form method="POST" action="{{ route('admin.contact-methods.update', $contactMethod) }}" class="space-y-5">
+        <form method="POST" action="{{ route('admin.contact-methods.update', $contactMethod) }}" class="space-y-5" enctype="multipart/form-data">
             @csrf @method('PUT')
 
             <div>
@@ -24,7 +24,7 @@
                 <label class="block text-sm font-medium text-dark-300 mb-1.5">Type <span class="text-red-400">*</span></label>
                 <select name="type" required class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors">
                     <option value="">Select type...</option>
-                    @foreach(['whatsapp', 'telegram', 'email', 'phone', 'twitter', 'instagram', 'discord', 'facebook', 'other'] as $type)
+                    @foreach($types as $type)
                         <option value="{{ $type }}" {{ old('type', $contactMethod->type) === $type ? 'selected' : '' }}>{{ ucfirst($type) }}</option>
                     @endforeach
                 </select>
@@ -41,6 +41,8 @@
                 <input type="url" name="url" value="{{ old('url', $contactMethod->url) }}" placeholder="https://wa.me/966501234567"
                        class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors">
             </div>
+
+            @include('admin.partials.image-upload', ['current' => $contactMethod->image, 'label' => 'Custom Logo (optional)'])
 
             <div>
                 <label class="block text-sm font-medium text-dark-300 mb-1.5">Description (optional)</label>

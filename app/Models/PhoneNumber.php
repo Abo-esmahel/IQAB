@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class PhoneNumber extends Model
 {
     use HasFactory;
-    protected $fillable = ['phone_number', 'provider', 'country', 'country_code', 'provider_number_id', 'price', 'status', 'metadata', 'expires_at'];
+    protected $fillable = ['phone_number', 'provider', 'country', 'country_code', 'provider_number_id', 'price', 'image', 'status', 'metadata', 'expires_at'];
 
     protected $casts = [
         'status' => PhoneNumberStatus::class,

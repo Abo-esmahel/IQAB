@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Concerns\HandlesImageUploads;
 use App\Models\MarketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class AdminServiceController extends Controller
 {
+    use HandlesImageUploads;
     public function index(Request $request)
     {
         $query = MarketService::query();
@@ -45,6 +47,7 @@ class AdminServiceController extends Controller
             'short_description' => ['nullable', 'string', 'max:255'],
             'price' => ['required', 'numeric', 'min:0'],
             'image' => ['nullable', 'string', 'max:500'],
+            'image_file' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:2048'],
             'category' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
             'is_featured' => ['nullable', 'boolean'],
@@ -60,6 +63,7 @@ class AdminServiceController extends Controller
         $validated['slug'] = $slug;
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['is_featured'] = $request->boolean('is_featured');
+        $validated['image'] = $this->resolveImage($request, null, 'services');
 
         MarketService::create($validated);
 
@@ -79,6 +83,7 @@ class AdminServiceController extends Controller
             'short_description' => ['nullable', 'string', 'max:255'],
             'price' => ['required', 'numeric', 'min:0'],
             'image' => ['nullable', 'string', 'max:500'],
+            'image_file' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:2048'],
             'category' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
             'is_featured' => ['nullable', 'boolean'],
@@ -97,6 +102,7 @@ class AdminServiceController extends Controller
 
         $validated['is_active'] = $request->boolean('is_active', $service->is_active);
         $validated['is_featured'] = $request->boolean('is_featured', $service->is_featured);
+        $validated['image'] = $this->resolveImage($request, $service->image, 'services');
 
         $service->update($validated);
 
@@ -109,6 +115,7 @@ class AdminServiceController extends Controller
             return back()->with('error', 'Cannot delete a service with existing purchases.');
         }
 
+        $this->deleteStoredImage($service->image);
         $service->delete();
         return redirect()->route('admin.services.index')->with('success', 'Service deleted.');
     }

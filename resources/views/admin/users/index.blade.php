@@ -2,7 +2,13 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h1 class="text-2xl font-bold text-white mb-6">User Management</h1>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <h1 class="text-2xl font-bold text-white">User Management</h1>
+        <a href="{{ route('admin.users.create') }}" class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Add User
+        </a>
+    </div>
 
     <div class="rounded-xl bg-dark-900 border border-dark-800 p-4 mb-6">
         <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-col sm:flex-row gap-3">
@@ -40,7 +46,7 @@
                                 <p class="text-xs text-dark-500">{{ $user->email }}</p>
                             </td>
                             <td class="py-3 px-4">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-{{ $user->role === 'admin' ? 'amber' : 'dark' }}-500/10 text-{{ $user->role === 'admin' ? 'amber' : 'dark-300' }}-400">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-{{ $user->role === 'admin' ? 'amber' : 'dark' }}-500/10 text-{{ $user->role === 'admin' ? 'amber' : 'dark-300' }}">
                                     {{ ucfirst($user->role) }}
                                 </span>
                             </td>
@@ -53,6 +59,7 @@
                             <td class="py-3 px-4 text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('admin.users.show', $user) }}" class="text-primary-400 hover:text-primary-300 text-sm font-medium">View</a>
+                                    <a href="{{ route('admin.users.edit', $user) }}" class="text-dark-300 hover:text-white text-sm font-medium">Edit</a>
                                     @if(auth()->id() !== $user->id)
                                         <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete {{ $user->email }} permanently?')">
                                             @csrf @method('DELETE')

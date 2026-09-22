@@ -22,12 +22,13 @@ enum PhoneNumberStatus: string
 
     public function color(): string
     {
+        // NOTE: only colors covered by the CSS safelist (see resources/css/app.css).
         return match($this) {
-            self::Available => 'green',
+            self::Available => 'emerald',
             self::Reserved => 'yellow',
-            self::Active => 'blue',
+            self::Active => 'primary',
             self::Expired => 'red',
-            self::Disabled => 'gray',
+            self::Disabled => 'dark',
         };
     }
 

@@ -27,12 +27,15 @@
                         <tr class="border-b border-dark-800/50 hover:bg-dark-800/50">
                             <td class="py-3 px-4">
                                 <span class="text-white font-mono font-medium">{{ $purchase->phoneNumber?->phone_number ?? 'N/A' }}</span>
+                                @if($purchase->label)
+                                    <span class="block text-xs text-primary-400">{{ $purchase->label }}</span>
+                                @endif
                             </td>
                             <td class="py-3 px-4 text-dark-300">{{ $purchase->phoneNumber?->country ?? 'N/A' }}</td>
                             <td class="py-3 px-4">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
                                     bg-{{ $purchase->status->value === 'active' ? 'emerald' : ($purchase->status->value === 'expired' ? 'red' : ($purchase->status->value === 'cancelled' ? 'dark' : 'yellow')) }}-500/10
-                                    text-{{ $purchase->status->value === 'active' ? 'emerald' : ($purchase->status->value === 'expired' ? 'red' : ($purchase->status->value === 'cancelled' ? 'dark-400' : 'yellow')) }}-400">
+                                    text-{{ $purchase->status->value === 'active' ? 'emerald' : ($purchase->status->value === 'expired' ? 'red' : ($purchase->status->value === 'cancelled' ? 'dark-300' : 'yellow')) }}">
                                     {{ $purchase->status->label() }}
                                 </span>
                             </td>

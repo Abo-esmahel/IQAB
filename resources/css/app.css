@@ -3,7 +3,291 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+/* Dynamic status colors are built at runtime (bg-{color}-500/10 …) —
+   force Tailwind to always generate them. */
+@source inline("bg-amber-500/10");
+@source inline("bg-dark-500/10");
+@source inline("bg-emerald-500/10");
+@source inline("bg-red-500/10");
+@source inline("bg-yellow-500/10");
+@source inline("bg-primary-500/10");
+@source inline("text-amber-400");
+@source inline("text-dark-400");
+@source inline("text-emerald-400");
+@source inline("text-red-400");
+@source inline("text-yellow-400");
+@source inline("text-primary-400");
+@source inline("ring-amber-500/25");
+@source inline("ring-dark-500/25");
+@source inline("ring-emerald-500/25");
+@source inline("ring-red-500/25");
+@source inline("ring-yellow-500/25");
+@source inline("ring-primary-500/25");
+
+/* Self-hosted Instrument Sans (no third-party font requests) */
+@font-face {
+    font-family: 'Instrument Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/instrument-sans-400.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Instrument Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/instrument-sans-500.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Instrument Sans';
+    font-style: normal;
+    font-weight: 600 900;
+    font-display: swap;
+    src: url('../fonts/instrument-sans-600.woff2') format('woff2');
+}
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-primary-50: #fdf9ec;
+    --color-primary-100: #f9f0cd;
+    --color-primary-200: #f2df9c;
+    --color-primary-300: #eac968;
+    --color-primary-400: #e2b342;
+    --color-primary-500: #d89c2b;
+    --color-primary-600: #b8861f;
+    --color-primary-700: #8f6518;
+    --color-primary-800: #754f19;
+    --color-primary-900: #634317;
+    --color-primary-950: #38250b;
+
+    --color-dark-50: #f8f9fa;
+    --color-dark-100: #eef0f2;
+    --color-dark-200: #dfe2e6;
+    --color-dark-300: #c3c8cf;
+    --color-dark-400: #9aa2ad;
+    --color-dark-500: #727a86;
+    --color-dark-600: #565d68;
+    --color-dark-700: #3f454e;
+    --color-dark-800: #262b33;
+    --color-dark-900: #161a21;
+    --color-dark-950: #0a0d13;
+}
+
+html,
+body {
+    overflow-x: clip;
+}
+
+/* Prevent iOS Safari auto-zoom on form focus (inputs must be ≥16px). */
+@media (max-width: 640px) {
+    input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']),
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* ---------- Brand effects ---------- */
+
+.text-gold-gradient {
+    background: linear-gradient(120deg, #eac968 0%, #d89c2b 30%, #8f6518 50%, #d89c2b 70%, #eac968 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gold-shimmer 7s linear infinite;
+}
+@keyframes gold-shimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fade-up {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+        opacity 0.7s ease-out,
+        transform 0.7s ease-out;
+    will-change: opacity, transform;
+}
+.reveal.reveal-visible {
+    opacity: 1;
+    transform: none;
+}
+
+.card-lift {
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+}
+.card-lift:hover {
+    transform: translateY(-6px);
+    border-color: rgba(216, 156, 43, 0.4);
+    box-shadow: 0 18px 40px -18px rgba(216, 156, 43, 0.35);
+}
+.card-lift:hover .feature-icon {
+    background-color: rgba(216, 156, 43, 0.18);
+}
+
+.feature-icon {
+    transition: background-color 0.3s ease;
+}
+
+.card-topline {
+    background: linear-gradient(90deg, transparent, rgba(216, 156, 43, 0.55), transparent);
+}
+
+.step-line {
+    background: linear-gradient(180deg, transparent, rgba(216, 156, 43, 0.45), transparent);
+}
+
+.glow-ring {
+    box-shadow:
+        0 0 0 1px rgba(216, 156, 43, 0.25),
+        0 20px 50px -24px rgba(216, 156, 43, 0.45);
+}
+
+.float-slow {
+    animation: float-slow 9s ease-in-out infinite;
+}
+.float-slower {
+    animation: float-slow 13s ease-in-out infinite reverse;
+}
+@keyframes float-slow {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.bar-grow {
+    animation: bar-grow 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: bottom;
+}
+@keyframes bar-grow {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
+}
+
+.flash-pulse {
+    animation: flash-pulse 1.2s ease;
+}
+@keyframes flash-pulse {
+    0% {
+        text-shadow: 0 0 0 rgba(216, 156, 43, 0);
+    }
+    30% {
+        text-shadow:
+            0 0 24px rgba(216, 156, 43, 0.95),
+            0 0 60px rgba(216, 156, 43, 0.4);
+        transform: scale(1.12);
+    }
+    100% {
+        text-shadow: 0 0 0 rgba(216, 156, 43, 0);
+        transform: scale(1);
+    }
+}
+
+.btn-gold {
+    position: relative;
+    overflow: hidden;
+}
+.btn-gold::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-block-end: 0;
+    inset-inline-start: -150%;
+    width: 55%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+}
+.btn-gold:hover::after {
+    animation: btn-shine 0.9s ease;
+}
+@keyframes btn-shine {
+    to {
+        inset-inline-start: 150%;
+    }
+}
+
+.eagle-swoop {
+    animation: iqab-swoop 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes iqab-swoop {
+    0% {
+        transform: translate(150px, -210px) scale(0.45) rotate(-16deg);
+        opacity: 0;
+        filter: blur(8px);
+    }
+    60% {
+        transform: translate(-8px, 12px) scale(1.05) rotate(2deg);
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+.eagle-glow {
+    animation: iqab-glow 4s ease-in-out infinite;
+}
+@keyframes iqab-glow {
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.95;
+        transform: scale(1.08);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .float-slow,
+    .float-slower,
+    .eagle-swoop,
+    .eagle-glow,
+    .text-gold-gradient,
+    .fade-up {
+        animation: none !important;
+    }
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }

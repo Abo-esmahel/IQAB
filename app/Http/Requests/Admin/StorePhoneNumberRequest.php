@@ -22,6 +22,8 @@ class StorePhoneNumberRequest extends FormRequest
             'provider' => ['nullable', 'string', 'max:100'],
             'provider_number_id' => ['nullable', 'string', 'max:100'],
             'price' => ['required', 'numeric', 'min:0', 'max:1000000'],
+            'image' => ['nullable', 'string', 'max:500'],
+            'image_file' => ['nullable', 'file', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:2048'],
             'expires_at' => ['nullable', 'date'],
             'status' => ['nullable', 'in:' . implode(',', $this->statuses())],
         ];

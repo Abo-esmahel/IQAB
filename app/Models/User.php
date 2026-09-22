@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserStatus;
+use App\Notifications\QueuedResetPassword;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,6 +27,12 @@ class User extends Authenticatable
 
     public function isAdmin(): bool    {
         return $this->role === 'admin';
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        // Queued: slow SMTP servers must never block the HTTP request (504s).
+        $this->notify(new QueuedResetPassword($token));
     }
 
     public function isActive(): bool

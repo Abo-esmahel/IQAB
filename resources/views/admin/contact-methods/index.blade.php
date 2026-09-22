@@ -29,7 +29,7 @@
                 <tr class="hover:bg-dark-800/50">
                     <td class="px-4 py-3">
                         <div class="flex items-center gap-2">
-                            <span class="text-lg">{{ $method->display_icon }}</span>
+                            <x-brand-icon :type="$method->type" :image="$method->image" class="h-7 w-7" />
                             <span class="text-white font-medium">{{ $method->name }}</span>
                         </div>
                     </td>

@@ -9,8 +9,8 @@
 
     <div class="rounded-xl bg-dark-900 border border-dark-800 overflow-hidden">
         @if($service->image)
-            <div class="h-64 bg-dark-800 overflow-hidden">
-                <img src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover">
+            <div class="h-48 sm:h-64 bg-dark-800 overflow-hidden">
+                <img loading="lazy" decoding="async" src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover">
             </div>
         @else
             <div class="h-48 bg-gradient-to-br from-primary-600/20 to-primary-800/10 flex items-center justify-center">

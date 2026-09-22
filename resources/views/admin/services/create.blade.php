@@ -34,11 +34,7 @@
                 <x-forms.input name="sort_order" label="Sort Order" type="number" value="0" />
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-dark-300 mb-1.5">Image URL (optional)</label>
-                <input type="url" name="image" value="{{ old('image') }}" placeholder="https://example.com/image.jpg"
-                       class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors">
-            </div>
+            @include('admin.partials.image-upload', ['label' => 'Image (optional)'])
 
             <div class="flex items-center gap-2">
                 <input type="hidden" name="is_active" value="0">

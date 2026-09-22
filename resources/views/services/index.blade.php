@@ -14,7 +14,7 @@
             <a href="{{ route('services.show', $service) }}" class="group rounded-xl bg-dark-900 border border-dark-800 overflow-hidden hover:border-primary-500/50 transition-all">
                 @if($service->image)
                     <div class="h-40 bg-dark-800 overflow-hidden">
-                        <img src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <img loading="lazy" decoding="async" src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </div>
                 @else
                     <div class="h-40 bg-gradient-to-br from-primary-600/20 to-primary-800/20 flex items-center justify-center">
@@ -49,7 +49,15 @@
                     <option value="{{ $cat }}" {{ request('category') === $cat ? 'selected' : '' }}>{{ $cat }}</option>
                 @endforeach
             </select>
+            <select name="sort" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none">
+                <option value="newest" {{ request('sort', 'newest') === 'newest' ? 'selected' : '' }}>Newest</option>
+                <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Price ↑</option>
+                <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Price ↓</option>
+            </select>
             <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-primary-700 transition-colors">Search</button>
+            @if(request()->hasAny(['search', 'category', 'sort']))
+                <a href="{{ route('services.index') }}" class="rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm font-medium text-dark-300 hover:text-white transition-colors">Clear</a>
+            @endif
         </form>
     </div>
 
@@ -59,7 +67,7 @@
             <a href="{{ route('services.show', $service) }}" class="group rounded-xl bg-dark-900 border border-dark-800 overflow-hidden hover:border-dark-700 transition-all">
                 @if($service->image)
                     <div class="h-40 bg-dark-800 overflow-hidden">
-                        <img src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <img loading="lazy" decoding="async" src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </div>
                 @else
                     <div class="h-40 bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center">

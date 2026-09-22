@@ -14,10 +14,15 @@
                     <option value="{{ $country }}" {{ request('country') === $country ? 'selected' : '' }}>{{ $country }}</option>
                 @endforeach
             </select>
-            <input type="number" name="min_price" placeholder="Min Price" value="{{ request('min_price') }}" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none w-full sm:w-32">
-            <input type="number" name="max_price" placeholder="Max Price" value="{{ request('max_price') }}" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none w-full sm:w-32">
+            <input type="number" name="min_price" placeholder="Min Price" min="0" step="0.01" value="{{ request('min_price') }}" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none w-full sm:w-32">
+            <input type="number" name="max_price" placeholder="Max Price" min="0" step="0.01" value="{{ request('max_price') }}" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none w-full sm:w-32">
+            <select name="sort" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none">
+                <option value="newest" {{ request('sort', 'newest') === 'newest' ? 'selected' : '' }}>Newest</option>
+                <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Price ↑</option>
+                <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Price ↓</option>
+            </select>
             <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors">Filter</button>
-            @if(request()->hasAny(['country', 'min_price', 'max_price']))
+            @if(request()->hasAny(['country', 'min_price', 'max_price', 'sort']))
                 <a href="{{ route('numbers.index') }}" class="rounded-lg bg-dark-800 border border-dark-700 px-4 py-2 text-sm font-medium text-dark-300 hover:text-white transition-colors">Clear</a>
             @endif
         </form>

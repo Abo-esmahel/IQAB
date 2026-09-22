@@ -24,12 +24,13 @@ enum NumberPurchaseStatus: string
 
     public function color(): string
     {
+        // NOTE: only colors covered by the CSS safelist (see resources/css/app.css).
         return match($this) {
             self::Pending => 'yellow',
-            self::Active => 'green',
+            self::Active => 'emerald',
             self::Expired => 'red',
-            self::Cancelled => 'gray',
-            self::Refunded => 'orange',
+            self::Cancelled => 'dark',
+            self::Refunded => 'amber',
             self::Failed => 'red',
         };
     }

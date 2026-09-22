@@ -9,7 +9,7 @@
 
     <div class="rounded-xl bg-dark-900 border border-dark-800 p-6 mb-6">
         <div class="text-center mb-6">
-            <p class="text-3xl font-mono font-bold text-white">{{ $purchase->phoneNumber?->phone_number }}</p>
+            <p class="text-2xl sm:text-3xl font-mono font-bold text-white break-all">{{ $purchase->phoneNumber?->phone_number }}</p>
             <p class="text-dark-400 mt-1">{{ $purchase->phoneNumber?->country }}</p>
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
                 bg-{{ $purchase->status->value === 'active' ? 'emerald' : 'red' }}-500/10
@@ -50,5 +50,38 @@
             </a>
         @endif
     </div>
+
+    @if(in_array($purchase->status->value, ['active', 'pending'], true))
+    <div class="rounded-xl bg-dark-900 border border-dark-800 p-6 mb-6">
+        <h2 class="text-lg font-semibold text-white mb-4">Manage Number</h2>
+
+        {{-- Nickname --}}
+        <form method="POST" action="{{ route('my-numbers.update', $purchase) }}" class="mb-5">
+            @csrf @method('PUT')
+            <label class="block text-sm font-medium text-dark-300 mb-1.5">Nickname (optional)</label>
+            <div class="flex gap-2">
+                <input type="text" name="label" value="{{ old('label', $purchase->label) }}" maxlength="50" placeholder="e.g. Business line"
+                       class="flex-1 rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
+                <button type="submit" class="rounded-lg bg-dark-800 border border-dark-700 px-4 py-2 text-sm font-medium text-dark-200 hover:text-white hover:border-primary-500/40 transition-colors">Save</button>
+            </div>
+        </form>
+
+        <div class="grid sm:grid-cols-2 gap-3">
+            @if($purchase->status->value === 'active')
+                <a href="{{ route('my-numbers.replace', $purchase) }}" class="inline-flex items-center justify-center gap-2 rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm font-medium text-dark-200 hover:text-white hover:border-primary-500/40 transition-colors">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    Replace Number
+                </a>
+            @endif
+            <form method="POST" action="{{ route('my-numbers.release', $purchase) }}" onsubmit="return confirm('Release this number? You will lose access to it and its messages.');">
+                @csrf
+                <button type="submit" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-2.5 text-sm font-medium text-red-400 hover:bg-red-500/20 transition-colors">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    Release Number
+                </button>
+            </form>
+        </div>
+    </div>
+    @endif
 </div>
 @endsection

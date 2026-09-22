@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\AuditAction;
 use App\Enums\PhoneNumberStatus;
+use App\Http\Controllers\Admin\Concerns\HandlesImageUploads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StorePhoneNumberRequest;
 use App\Http\Requests\Admin\UpdatePhoneNumberRequest;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 
 class AdminNumberController extends Controller
 {
+    use HandlesImageUploads;
     public function index(Request $request)
     {
         $query = PhoneNumber::query();
@@ -53,7 +55,10 @@ class AdminNumberController extends Controller
             return $this->storeBulk($request);
         }
 
-        $number = PhoneNumber::create($request->validated());
+        $data = $request->validated();
+        $data['image'] = $this->resolveImage($request, null, 'numbers');
+
+        $number = PhoneNumber::create($data);
 
         $this->logAudit(AuditAction::Create, $number, [], $number->toArray(), "Published number {$number->phone_number}");
 
@@ -71,7 +76,9 @@ class AdminNumberController extends Controller
     public function update(UpdatePhoneNumberRequest $request, PhoneNumber $number)
     {
         $old = $number->toArray();
-        $number->update($request->validated());
+        $data = $request->validated();
+        $data['image'] = $this->resolveImage($request, $number->image, 'numbers');
+        $number->update($data);
 
         $this->logAudit(AuditAction::Update, $number, $old, $number->toArray(), "Updated number {$number->phone_number}");
 
@@ -86,6 +93,7 @@ class AdminNumberController extends Controller
         }
 
         $old = $number->toArray();
+        $this->deleteStoredImage($number->image);
         $number->delete();
 
         $this->logAudit(AuditAction::Delete, $number, $old, [], "Deleted number {$number->phone_number}");
@@ -111,7 +119,7 @@ class AdminNumberController extends Controller
 
     protected function storeBulk(StorePhoneNumberRequest $request)
     {
-        $base = $request->safe()->except(['phone_number', 'bulk']);
+        $base = $request->safe()->except(['phone_number', 'bulk', 'image', 'image_file', 'remove_image']);
 
         $lines = collect(preg_split('/\r\n|\r|\n/', $request->bulk))
             ->map(fn ($line) => trim($line))

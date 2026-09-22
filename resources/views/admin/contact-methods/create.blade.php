@@ -11,7 +11,7 @@
     />
 
     <x-admin.card>
-        <form method="POST" action="{{ route('admin.contact-methods.store') }}" class="space-y-5">
+        <form method="POST" action="{{ route('admin.contact-methods.store') }}" class="space-y-5" enctype="multipart/form-data">
             @csrf
 
             <div>
@@ -24,15 +24,9 @@
                 <label class="block text-sm font-medium text-dark-300 mb-1.5">Type <span class="text-red-400">*</span></label>
                 <select name="type" required class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors">
                     <option value="">Select type...</option>
-                    <option value="whatsapp" {{ old('type') === 'whatsapp' ? 'selected' : '' }}>WhatsApp</option>
-                    <option value="telegram" {{ old('type') === 'telegram' ? 'selected' : '' }}>Telegram</option>
-                    <option value="email" {{ old('type') === 'email' ? 'selected' : '' }}>Email</option>
-                    <option value="phone" {{ old('type') === 'phone' ? 'selected' : '' }}>Phone</option>
-                    <option value="twitter" {{ old('type') === 'twitter' ? 'selected' : '' }}>Twitter/X</option>
-                    <option value="instagram" {{ old('type') === 'instagram' ? 'selected' : '' }}>Instagram</option>
-                    <option value="discord" {{ old('type') === 'discord' ? 'selected' : '' }}>Discord</option>
-                    <option value="facebook" {{ old('type') === 'facebook' ? 'selected' : '' }}>Facebook</option>
-                    <option value="other" {{ old('type') === 'other' ? 'selected' : '' }}>Other</option>
+                    @foreach($types as $type)
+                        <option value="{{ $type }}" {{ old('type') === $type ? 'selected' : '' }}>{{ ucfirst($type) }}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -49,6 +43,8 @@
                        class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors">
                 <p class="text-xs text-dark-500 mt-1">Direct link when users click this contact method.</p>
             </div>
+
+            @include('admin.partials.image-upload', ['label' => 'Custom Logo (optional)'])
 
             <div>
                 <label class="block text-sm font-medium text-dark-300 mb-1.5">Description (optional)</label>

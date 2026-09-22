@@ -9,7 +9,7 @@
 
     <div class="rounded-xl bg-dark-900 border border-dark-800 p-6">
         <div class="text-center mb-6">
-            <p class="text-3xl font-mono font-bold text-white">{{ $number->phone_number }}</p>
+            <p class="text-2xl sm:text-3xl font-mono font-bold text-white break-all">{{ $number->phone_number }}</p>
             <p class="text-dark-400 mt-1">{{ $number->country }} ({{ $number->country_code }})</p>
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-{{ $number->status->color() }}-500/10 text-{{ $number->status->color() }}-400 mt-3">{{ $number->status->label() }}</span>
         </div>

@@ -34,16 +34,7 @@
                 <x-forms.input name="sort_order" label="Sort Order" type="number" :value="$service->sort_order" />
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-dark-300 mb-1.5">Image URL</label>
-                <input type="url" name="image" value="{{ old('image', $service->image) }}" placeholder="https://example.com/image.jpg"
-                       class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors">
-                @if($service->image)
-                    <div class="mt-2">
-                        <img src="{{ $service->image }}" class="h-16 rounded-lg object-cover" alt="Current image">
-                    </div>
-                @endif
-            </div>
+            @include('admin.partials.image-upload', ['current' => $service->image, 'label' => 'Image'])
 
             <div class="flex items-center gap-2">
                 <input type="hidden" name="is_active" value="0">

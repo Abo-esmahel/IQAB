@@ -23,7 +23,7 @@
             <label class="block text-sm font-medium text-dark-300 mb-1.5">Password</label>
             <input type="password" name="password" required
                    class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors"
-                   placeholder="Min 8 characters">
+                   placeholder="Min 8 characters, letters + numbers">
         </div>
         <div>
             <label class="block text-sm font-medium text-dark-300 mb-1.5">Confirm Password</label>

@@ -8,7 +8,7 @@
     </div>
 
     <div class="rounded-xl bg-dark-900 border border-dark-800 p-6">
-        <form method="POST" action="{{ route('admin.numbers.update', $number) }}" class="space-y-4">
+        <form method="POST" action="{{ route('admin.numbers.update', $number) }}" class="space-y-4" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div>
@@ -62,6 +62,7 @@
                        value="{{ old('expires_at', $number->expires_at ? $number->expires_at->format('Y-m-d\TH:i') : '') }}"
                        class="w-full rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none [color-scheme:dark]">
             </div>
+            @include('admin.partials.image-upload', ['current' => $number->image, 'label' => 'Image (optional)'])
             <div class="flex items-center gap-3 pt-2">
                 <button type="submit" class="rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
                     Save Changes

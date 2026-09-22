@@ -19,6 +19,13 @@
                    class="w-full rounded-lg bg-dark-800 border border-dark-700 px-4 py-2.5 text-sm text-white placeholder-dark-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-colors"
                    placeholder="Password">
         </div>
+        <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 text-sm text-dark-400 cursor-pointer">
+                <input type="checkbox" name="remember" value="1" class="rounded border-dark-700 bg-dark-800 text-primary-600 focus:ring-primary-500">
+                Remember me
+            </label>
+            <a href="{{ route('password.request') }}" class="text-sm text-primary-400 hover:text-primary-300 font-medium">Forgot password?</a>
+        </div>
         <button type="submit" class="w-full rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 transition-colors">
             Sign In
         </button>

@@ -42,8 +42,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z"/>
             </svg>
             <input type="text" name="search" placeholder="Search numbers, services, offers..."
-                   value="{{ request('search') }}"
-                   class="flex-1 bg-transparent text-sm sm:text-base text-white placeholder-dark-500 outline-none">
+                   value="{{ request('search') }}" maxlength="100"
+                   class="flex-1 min-w-0 bg-transparent text-sm sm:text-base text-white placeholder-dark-500 outline-none">
             <button type="submit" class="shrink-0 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary-600/20 transition-all hover:from-primary-500 hover:to-primary-600 hover:shadow-primary-500/30">
                 Search
             </button>
@@ -57,17 +57,22 @@
                 Filters
                 <svg class="h-4 w-4 transition-transform" :class="open && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            @if(request()->hasAny(['search', 'country', 'category', 'min_price', 'max_price']))
+            @if(request()->hasAny(['search', 'country', 'category', 'min_price', 'max_price', 'sort']))
                 <a href="{{ route('marketplace', ['tab' => $tab]) }}" class="text-sm text-dark-500 hover:text-primary-400 transition-colors">Clear all</a>
             @endif
         </div>
 
         {{-- Collapsible filter row --}}
-        <div x-show="open" x-cloak x-transition.opacity class="mt-3 grid sm:grid-cols-2 lg:grid-cols-4 gap-3 rounded-xl bg-dark-900 border border-dark-800 p-4">
-            <input type="number" name="min_price" placeholder="Min Price" value="{{ request('min_price') }}"
+        <div x-show="open" x-cloak x-transition.opacity class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 rounded-xl bg-dark-900 border border-dark-800 p-4">
+            <input type="number" name="min_price" placeholder="Min Price" min="0" step="0.01" value="{{ request('min_price') }}"
                    class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
-            <input type="number" name="max_price" placeholder="Max Price" value="{{ request('max_price') }}"
+            <input type="number" name="max_price" placeholder="Max Price" min="0" step="0.01" value="{{ request('max_price') }}"
                    class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white placeholder-dark-500 focus:border-primary-500 outline-none">
+            <select name="sort" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none">
+                <option value="newest" {{ request('sort', 'newest') === 'newest' ? 'selected' : '' }}>Newest first</option>
+                <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Price: low to high</option>
+                <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Price: high to low</option>
+            </select>
             @if($tab === 'all' || $tab === 'numbers')
             <select name="country" class="rounded-lg bg-dark-800 border border-dark-700 px-3 py-2 text-sm text-white focus:border-primary-500 outline-none">
                 <option value="">All Countries</option>
@@ -104,7 +109,7 @@
                 <div class="group relative rounded-xl overflow-hidden border border-amber-500/20 hover:border-amber-500/40 transition-all" style="background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(15,23,42,1) 100%);">
                     @if($offer->image)
                         <div class="h-40 bg-dark-800 overflow-hidden">
-                            <img src="{{ $offer->image }}" alt="{{ $offer->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img loading="lazy" decoding="async" src="{{ $offer->image }}" alt="{{ $offer->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                     @else
                         <div class="h-32 bg-gradient-to-br from-amber-600/20 to-orange-600/10 flex items-center justify-center">
@@ -161,7 +166,7 @@
                 <a href="{{ route('services.show', $service) }}" class="group rounded-xl bg-dark-900 border border-dark-800 overflow-hidden hover:border-dark-700 transition-all">
                     @if($service->image)
                         <div class="h-36 bg-dark-800 overflow-hidden">
-                            <img src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img loading="lazy" decoding="async" src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                     @else
                         <div class="h-36 bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center">
@@ -234,7 +239,7 @@
                 <div class="group relative rounded-xl overflow-hidden border border-amber-500/20 hover:border-amber-500/40 transition-all" style="background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(15,23,42,1) 100%);">
                     @if($offer->image)
                         <div class="h-44 bg-dark-800 overflow-hidden">
-                            <img src="{{ $offer->image }}" alt="{{ $offer->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img loading="lazy" decoding="async" src="{{ $offer->image }}" alt="{{ $offer->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                     @else
                         <div class="h-36 bg-gradient-to-br from-amber-600/20 to-orange-600/10 flex items-center justify-center">
@@ -332,7 +337,7 @@
                 <a href="{{ route('services.show', $service) }}" class="group rounded-xl bg-dark-900 border border-dark-800 overflow-hidden hover:border-dark-700 transition-all">
                     @if($service->image)
                         <div class="h-40 bg-dark-800 overflow-hidden">
-                            <img src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img loading="lazy" decoding="async" src="{{ $service->image }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                     @else
                         <div class="h-40 bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center">

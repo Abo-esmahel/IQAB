@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TelegramServiceRequestForm;
+use App\Mail\TelegramRequestStatusMail;
 use App\Models\TelegramService;
 use App\Models\TelegramServiceRequest;
 use App\Services\Telegram\TelegramProviderService;
@@ -10,14 +11,27 @@ use App\Enums\TelegramServiceStatus;
 use App\Enums\TelegramServiceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class TelegramController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $services = TelegramService::where('is_active', true)->get();
+        $services = TelegramService::where('is_active', true)->orderBy('price')->get();
 
-        return view('telegram.index', compact('services'));
+        $recent = TelegramServiceRequest::where('user_id', $request->user()->id)
+            ->with('telegramService')
+            ->orderByDesc('created_at')
+            ->take(5)
+            ->get();
+
+        $stats = [
+            'total' => TelegramServiceRequest::where('user_id', $request->user()->id)->count(),
+            'completed' => TelegramServiceRequest::where('user_id', $request->user()->id)
+                ->where('status', TelegramServiceStatus::Completed->value)->count(),
+        ];
+
+        return view('telegram.index', compact('services', 'recent', 'stats'));
     }
 
     public function submit(TelegramServiceRequestForm $request, TelegramProviderService $telegram)
@@ -62,6 +76,8 @@ class TelegramController extends Controller
                 'error_message' => $e->getMessage(),
             ]);
         }
+
+        Mail::to($user)->queue(new TelegramRequestStatusMail($user, $serviceRequest->fresh()));
 
         return redirect()->route('telegram.result', $serviceRequest)
             ->with('success', 'Service request submitted!');

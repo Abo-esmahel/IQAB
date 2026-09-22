@@ -12,6 +12,7 @@ class ContactMethod extends Model
         'type',
         'value',
         'icon',
+        'image',
         'color',
         'url',
         'is_active',

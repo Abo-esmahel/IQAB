@@ -7,85 +7,9 @@
     <title>{{ $title ?? config('app.name', 'IQAB') }}</title>
     <link rel="icon" href="{{ asset('images/logo.jpg') }}" type="image/jpeg">
     <link rel="shortcut icon" href="{{ asset('images/logo.jpg') }}" type="image/jpeg">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Instrument Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: { 50: '#fdf9ec', 100: '#f9f0cd', 200: '#f2df9c', 300: '#eac968', 400: '#e2b342', 500: '#d89c2b', 600: '#b8861f', 700: '#8f6518', 800: '#754f19', 900: '#634317', 950: '#38250b' },
-                        dark: { 50: '#f8f9fa', 100: '#eef0f2', 200: '#dfe2e6', 300: '#c3c8cf', 400: '#9aa2ad', 500: '#727a86', 600: '#565d68', 700: '#3f454e', 800: '#262b33', 900: '#161a21', 950: '#0a0d13' }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        [x-cloak] { display: none !important; }
-
-        .text-gold-gradient {
-            background: linear-gradient(120deg, #eac968 0%, #d89c2b 30%, #8f6518 50%, #d89c2b 70%, #eac968 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gold-shimmer 7s linear infinite;
-        }
-        @keyframes gold-shimmer { to { background-position: 200% center; } }
-
-        .fade-up { opacity: 0; transform: translateY(22px); animation: fade-up .7s cubic-bezier(.16,1,.3,1) forwards; }
-        @keyframes fade-up { to { opacity: 1; transform: none; } }
-
-        .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease-out, transform .7s ease-out; will-change: opacity, transform; }
-        .reveal.reveal-visible { opacity: 1; transform: none; }
-
-        .card-lift { transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, background-color .3s ease; }
-        .card-lift:hover {
-            transform: translateY(-6px);
-            border-color: rgba(216, 156, 43, .4);
-            box-shadow: 0 18px 40px -18px rgba(216, 156, 43, .35);
-        }
-
-        .card-topline { background: linear-gradient(90deg, transparent, rgba(216, 156, 43, .55), transparent); }
-
-        .float-slow { animation: float-slow 9s ease-in-out infinite; }
-        @keyframes float-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
-
-        .bar-grow { animation: bar-grow 1s cubic-bezier(.16,1,.3,1) both; transform-origin: bottom; }
-        @keyframes bar-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-
-        .glow-ring { box-shadow: 0 0 0 1px rgba(216,156,43,.25), 0 20px 50px -24px rgba(216,156,43,.45); }
-
-        .flash-pulse { animation: flash-pulse 1.2s ease; }
-        @keyframes flash-pulse {
-            0% { text-shadow: 0 0 0 rgba(216, 156, 43, 0); }
-            30% { text-shadow: 0 0 24px rgba(216, 156, 43, .95), 0 0 60px rgba(216, 156, 43, .4); transform: scale(1.12); }
-            100% { text-shadow: 0 0 0 rgba(216, 156, 43, 0); transform: scale(1); }
-        }
-
-        .btn-gold { position: relative; overflow: hidden; }
-        .btn-gold::after {
-            content: '';
-            position: absolute;
-            inset-block-start: 0;
-            inset-block-end: 0;
-            inset-inline-start: -150%;
-            width: 55%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
-            transform: skewX(-20deg);
-            pointer-events: none;
-        }
-        .btn-gold:hover::after { animation: btn-shine .9s ease; }
-        @keyframes btn-shine { to { inset-inline-start: 150%; } }
-    </style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="h-full bg-dark-950 text-dark-100 font-sans antialiased">
+<body class="h-full bg-dark-950 text-dark-100 font-sans antialiased overflow-x-clip">
     <div aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 h-[42rem] bg-[radial-gradient(60rem_26rem_at_50%_-8rem,rgba(216,156,43,0.08),transparent)]"></div>
     <div class="relative min-h-full" x-data="{ sidebarOpen: false }">
         @auth

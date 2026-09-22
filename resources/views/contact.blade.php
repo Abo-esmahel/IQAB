@@ -1,28 +1,42 @@
 @extends('layouts.app', ['title' => 'Contact Us - IQAB'])
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="text-center mb-10">
-        <h1 class="text-3xl font-bold text-white mb-3">Contact Us</h1>
-        <p class="text-dark-400">Get in touch with us through any of these channels.</p>
+        <p class="text-sm font-medium text-primary-400 uppercase tracking-widest">Support 24/7</p>
+        <h1 class="mt-2 text-3xl sm:text-4xl font-bold text-white">Contact Us</h1>
+        <p class="mt-3 text-dark-400 max-w-xl mx-auto">Reach our team on your favorite platform — we usually reply within minutes.</p>
     </div>
 
     @if($contactMethods->count())
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         @foreach($contactMethods as $method)
+        @php $color = $method->color ?: '#d89c2b'; @endphp
         <a href="{{ $method->url ?? '#' }}" target="_blank" rel="noopener"
-           class="group rounded-xl bg-dark-900 border border-dark-800 p-6 hover:border-dark-700 transition-all text-center">
-            <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl" style="background-color: {{ $method->color ?? '#334155' }}20;">
-                <span>{{ $method->display_icon }}</span>
+           class="group relative overflow-hidden rounded-2xl bg-dark-900 border border-dark-800 p-6 text-center transition-all hover:-translate-y-1 hover:border-primary-500/40 hover:shadow-[0_18px_40px_-18px_rgba(216,156,43,0.35)] flex flex-col">
+            <div aria-hidden="true" class="absolute -top-16 start-1/2 -translate-x-1/2 h-40 w-64 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" style="background: radial-gradient(closest-side, {{ $color }}26, transparent);"></div>
+
+            <div class="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center transition-transform group-hover:scale-105">
+                <div aria-hidden="true" class="absolute inset-0 rounded-full blur-2xl" style="background-color: {{ $color }}40;"></div>
+                <div class="relative drop-shadow-[0_8px_20px_rgba(0,0,0,0.65)]" style="color: {{ $color }};">
+                    <x-brand-icon :type="$method->type" :image="$method->image" class="h-16 w-16" />
+                </div>
             </div>
-            <h3 class="font-semibold text-white group-hover:text-primary-400 transition-colors mb-1">{{ $method->name }}</h3>
-            <p class="text-sm text-dark-400 font-mono">{{ $method->value }}</p>
+
+            <h3 class="relative font-bold text-white text-lg group-hover:text-primary-300 transition-colors">{{ $method->name }}</h3>
+            <button type="button" data-copy="{{ $method->value }}"
+                    class="relative mt-1 text-sm text-dark-400 font-mono hover:text-white transition-colors cursor-pointer"
+                    title="Click to copy">{{ $method->value }}</button>
             @if($method->description)
-                <p class="text-xs text-dark-500 mt-2">{{ $method->description }}</p>
+                <p class="relative text-xs text-dark-500 mt-2 leading-relaxed">{{ $method->description }}</p>
             @endif
-            <span class="inline-flex items-center gap-1 text-xs text-primary-400 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                Contact Now
-                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+
+            <span class="flex-1 min-h-5"></span>
+
+            <span class="relative mt-0 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-all hover:brightness-110 hover:shadow-lg"
+                  style="background-color: {{ $color }};">
+                Chat Now
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </span>
         </a>
         @endforeach
@@ -35,4 +49,20 @@
     </div>
     @endif
 </div>
+
+<script>
+    document.querySelectorAll('[data-copy]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+            e.preventDefault();
+            var done = function () {
+                var original = el.textContent;
+                el.textContent = 'Copied!';
+                setTimeout(function () { el.textContent = original; }, 1200);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(el.dataset.copy).then(done).catch(done);
+            } else { done(); }
+        });
+    });
+</script>
 @endsection

@@ -1,5 +1,11 @@
 <div class="group relative overflow-hidden rounded-2xl border border-dark-800 bg-dark-900 transition-all hover:-translate-y-0.5 hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-900/20">
     <div class="h-1.5 bg-gradient-to-r from-primary-600 to-primary-400"></div>
+    @if($number->image)
+        <div class="relative h-28 overflow-hidden">
+            <img loading="lazy" decoding="async" src="{{ $number->image }}" alt="{{ $number->country }}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
+        </div>
+    @endif
     <div class="p-5">
         <div class="flex items-center justify-between">
             <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400">

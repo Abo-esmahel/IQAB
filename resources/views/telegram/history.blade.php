@@ -24,11 +24,7 @@
                             <td class="py-3 px-4 text-white">{{ $req->telegramService?->name ?? 'N/A' }}</td>
                             <td class="py-3 px-4 text-dark-300 font-mono text-xs">{{ $req->target_identifier }}</td>
                             <td class="py-3 px-4">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
-                                    bg-{{ match($req->status->value) { 'completed' => 'emerald', 'processing' => 'amber', 'failed' => 'red', default => 'yellow' } }}-500/10
-                                    text-{{ match($req->status->value) { 'completed' => 'emerald', 'processing' => 'amber', 'failed' => 'red', default => 'yellow' } }}-400">
-                                    {{ $req->status->label() }}
-                                </span>
+                                <x-status-pill :status="$req->status" :label="$req->status->label()" />
                             </td>
                             <td class="py-3 px-4 text-dark-400 hidden sm:table-cell">{{ $req->created_at->format('M d, Y') }}</td>
                             <td class="py-3 px-4 text-right">
